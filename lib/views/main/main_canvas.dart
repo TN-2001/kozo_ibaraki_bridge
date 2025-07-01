@@ -1,0 +1,19 @@
+import 'package:flutter/material.dart';
+
+class MainCanvas extends StatefulWidget {
+  const MainCanvas({super.key});
+
+  @override
+  State<MainCanvas> createState() => _MainCanvasState();
+}
+
+class _MainCanvasState extends State<MainCanvas> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      color: const Color.fromARGB(255, 255, 255, 255),
+    );
+  }
+}
