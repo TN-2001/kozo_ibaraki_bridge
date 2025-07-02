@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kozo_ibaraki_bridge/views/main/main_canvas.dart';
+import 'package:kozo_ibaraki_bridge/views/main/canvas/main_canvas.dart';
 import 'package:kozo_ibaraki_bridge/views/main/ui/main_ui.dart';
 
 class MainPage extends StatefulWidget {
