@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:kozo_ibaraki_bridge/constants/app_colors.dart';
+import 'package:kozo_ibaraki_bridge/constants/colors.dart';
+import 'package:kozo_ibaraki_bridge/constants/dimens.dart';
 
 
 class ToolToggleButtons extends StatefulWidget {
-  const ToolToggleButtons({super.key, required this.icons, required this.onPressed});
+  const ToolToggleButtons({
+    super.key, 
+    required this.icons, 
+    required this.onPressed,
+    this.messages = const [],
+  });
 
   final List<IconData> icons;
   final void Function(int index) onPressed;
+  final List<String> messages;
 
   @override
   State<ToolToggleButtons> createState() => _ToolToggleButtonsState();
@@ -23,12 +30,18 @@ class _ToolToggleButtonsState extends State<ToolToggleButtons> {
 
     return Container(
       // デザイン
-      color: AppColors.toolBaseColor,
+      color: ToolUIColors.baseColor,
 
       child: ToggleButtons(
         // デザイン
-        borderColor: AppColors.toolBorderColor,
-        selectedBorderColor: AppColors.toolBorderColor,
+        borderWidth: ToolUIDimens.borderWidth,
+        borderColor: ToolUIColors.borderColor,
+        selectedBorderColor: ToolUIColors.borderColor,
+        borderRadius: BorderRadius.zero,
+        constraints: BoxConstraints(
+          minWidth: ToolUIDimens.width - ToolUIDimens.borderWidth-2,
+          minHeight: ToolUIDimens.height - ToolUIDimens.borderWidth-2,
+        ),
         // イベント
         onPressed: (int index) {
           setState(() {
@@ -40,7 +53,12 @@ class _ToolToggleButtonsState extends State<ToolToggleButtons> {
         isSelected: selected,
         children: [
           for (int i = 0; i < widget.icons.length; i++)...{
-            Icon(widget.icons[i]),
+            Tooltip(
+              message: widget.messages.length > i ? widget.messages[i] : "",
+              child: Icon(
+                widget.icons[i]
+              ),
+            ),
           },
         ],
       ),

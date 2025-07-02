@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kozo_ibaraki_bridge/constants/dimens.dart';
 
 class MainUILayout extends StatelessWidget {
   const MainUILayout({super.key, this.leftHeader, this.rightHeader});
@@ -12,7 +13,7 @@ class MainUILayout extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       child: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(UIDimens.padding),
         child: Column(
           children: [
             SizedBox(
@@ -21,7 +22,13 @@ class MainUILayout extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      if (leftHeader != null && leftHeader!.isNotEmpty) ...leftHeader!,
+                      if (leftHeader != null && leftHeader!.isNotEmpty) ...{
+                        leftHeader![0],
+                        for (int i = 1; i < leftHeader!.length; i++)...{
+                          SizedBox(width: ToolUIDimens.gapWidth,),
+                          leftHeader![i],
+                        }
+                      },
                       if (leftHeader == null || leftHeader!.isEmpty) const SizedBox(),
                     ],
                   ),
@@ -30,7 +37,13 @@ class MainUILayout extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      if (rightHeader != null && rightHeader!.isNotEmpty) ...rightHeader!,
+                      if (rightHeader != null && rightHeader!.isNotEmpty) ...{
+                        rightHeader![0],
+                        for (int i = 1; i < rightHeader!.length; i++)...{
+                          SizedBox(width: ToolUIDimens.gapWidth,),
+                          rightHeader![i],
+                        }
+                      },
                       if (rightHeader == null || rightHeader!.isEmpty) const SizedBox(),
                     ],
                   )

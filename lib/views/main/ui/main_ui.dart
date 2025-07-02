@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kozo_ibaraki_bridge/components/tool_dropdown_button.dart';
 import 'package:kozo_ibaraki_bridge/components/tool_icon_button.dart';
 import 'package:kozo_ibaraki_bridge/components/tool_toggle_buttons.dart';
 import 'package:kozo_ibaraki_bridge/views/main/ui/main_ui_layout.dart';
-import 'package:kozo_ibaraki_bridge/views/main/ui/main_ui_powerDropdown.dart';
 
 class MainUI extends StatefulWidget {
   const MainUI({super.key});
@@ -30,21 +30,30 @@ class _MainUIState extends State<MainUI> {
               Icons.edit,
               Icons.auto_fix_normal,
             ],
+            messages: ["ペン", "消しゴム"],
           ),
           ToolIconButton(
             onPressed: (){}, 
             icon: Icons.switch_right,
+            message: "対称化（左を右にコピー）",
           ),
-          MainUIPowerdropdown(
+          ToolIconButton(
+            onPressed: (){}, 
+            icon: Icons.restart_alt,
+            message: "リセット",
+          ),
+          ToolDropdownButton(
             onPressed: (int index) {
               powerNum = index;
-            } 
+            }, 
+            items: ["3点曲げ", "4点曲げ", "自重"], 
           ),
         ],
         rightHeader: [
-          IconButton(
+          ToolIconButton(
             onPressed: (){}, 
-            icon: Icon(Icons.play_arrow)
+            icon: Icons.play_arrow,
+            message: "解析",
           ),
         ],
       );
@@ -52,9 +61,10 @@ class _MainUIState extends State<MainUI> {
     else if (state == 1) {
       return MainUILayout(
         rightHeader: [
-          IconButton(
+          ToolIconButton(
             onPressed: (){}, 
-            icon: Icon(Icons.restart_alt)
+            icon: Icons.restart_alt,
+            message: "再編集",
           ),
         ],
       );
