@@ -11,15 +11,17 @@ class MainCanvas extends StatefulWidget {
 class _MainCanvasState extends State<MainCanvas> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: const Color.fromARGB(255, 255, 255, 255),
-      child: Stack(
-        children: [
-          Image.asset(ImagePass.cloud),
-          // CanvasArea(),
-        ],
+    return Expanded(
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: const Color.fromARGB(255, 255, 255, 255),
+        child: Stack(
+          children: [
+            Image.asset(ImagePass.cloud),
+            // CanvasArea(),
+          ],
+        ),
       ),
     );
   }

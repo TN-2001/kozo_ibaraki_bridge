@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:kozo_ibaraki_bridge/constants/colors.dart';
-import 'package:kozo_ibaraki_bridge/constants/dimens.dart';
+import '/constants/colors.dart';
+import '/constants/dimens.dart';
 
-class ToolIconButton extends StatefulWidget {
+class ToolIconButton extends StatelessWidget {
   const ToolIconButton({
     super.key, 
-    required this.icon, 
     required this.onPressed, 
+    required this.icon, 
     this.message = "",
   });
 
-  final IconData icon;
   final void Function() onPressed;
+  final Widget icon;
   final String message;
 
-  @override
-  State<ToolIconButton> createState() => _ToolIconButtonState();
-}
-
-class _ToolIconButtonState extends State<ToolIconButton> {  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +23,7 @@ class _ToolIconButtonState extends State<ToolIconButton> {
       color: ToolUIColors.baseColor,
 
       child: Tooltip(
-        message: widget.message,
+        message: message,
         child: IconButton(
           // デザイン
           style: IconButton.styleFrom(
@@ -36,14 +31,14 @@ class _ToolIconButtonState extends State<ToolIconButton> {
               borderRadius: BorderRadius.circular(0),
               side: BorderSide(
                 color: ToolUIColors.borderColor, // ここで色を指定
-                width: ToolUIDimens.borderWidth,          // 線の太さも指定可能
+                width: ToolUIDimens.borderWidth, // 線の太さも指定可能
               ),
             ),
           ),
           // イベント
-          onPressed: widget.onPressed, 
+          onPressed: onPressed, 
           // ウィジェット
-          icon: Icon(widget.icon),
+          icon: icon,
         ),
       ),
     );

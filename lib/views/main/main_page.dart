@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kozo_ibaraki_bridge/components/base_divider.dart';
 import 'package:kozo_ibaraki_bridge/views/main/canvas/main_canvas.dart';
 import 'package:kozo_ibaraki_bridge/views/main/ui/main_ui.dart';
 
@@ -13,10 +14,13 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: Column(
         children: [
-          MainCanvas(),
           MainUI(),
+
+          BaseDivider(),
+          
+          MainCanvas(),
         ],
       ),
     );
