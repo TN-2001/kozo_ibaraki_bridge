@@ -3,9 +3,7 @@ import 'package:kozo_ibaraki_bridge/views/main/canvas/main_canvas.dart';
 import 'package:kozo_ibaraki_bridge/views/main/ui/main_ui.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key, required this.title});
-
-  final String title;
+  const MainPage({super.key});
 
   @override
   State<MainPage> createState() => _MainPageState();

@@ -15,7 +15,17 @@ class _MainCanvasState extends State<MainCanvas> {
       width: double.infinity,
       height: double.infinity,
       color: const Color.fromARGB(255, 255, 255, 255),
-      child: Image.asset(ImagePass.cloud),
+      child: Stack(
+        children: [
+          Image.asset(ImagePass.cloud),
+          // CanvasArea(),
+        ],
+      ),
     );
   }
 }
+
+
+
+
+
