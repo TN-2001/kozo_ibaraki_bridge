@@ -5,9 +5,12 @@ import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_icon_button.dart';
 import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_toggle_buttons.dart';
 import 'package:kozo_ibaraki_bridge/constants/colors.dart';
 import 'package:kozo_ibaraki_bridge/constants/paths.dart';
+import 'package:kozo_ibaraki_bridge/views/main/models/pixel_canvas_controller.dart';
 
 class MainUI extends StatefulWidget {
-  const MainUI({super.key});
+  const MainUI({super.key, required this.controller});
+
+  final PixelCanvasController controller;
 
   @override
   State<MainUI> createState() => _MainUIState();
@@ -28,14 +31,21 @@ class _MainUIState extends State<MainUI> {
     setState(() {
       _toolIndex = index;
     });
+  
+    if (_toolIndex == 0) {
+      widget.controller.selectedColor = const Color.fromARGB(255, 197, 95, 95);
+    }
+    else {
+      widget.controller.selectedColor = const Color.fromARGB(0, 255, 255, 255);
+    }
   }
 
   void _onPressedUndoButton() {
-
+    widget.controller.undo();
   }
 
   void _onPressedRedoButton() {
-
+    widget.controller.redo();
   }
 
   void _onPressedMirrorButton() {
@@ -43,7 +53,7 @@ class _MainUIState extends State<MainUI> {
   }
 
   void _onPressedClearButton() {
-
+    widget.controller.clear();
   }
 
   void _onPressedPowerDropdown(int indent) {
@@ -69,6 +79,12 @@ class _MainUIState extends State<MainUI> {
     );
   }
 
+
+  @override
+  void initState() {
+    super.initState();
+    _onPressedToolToggle(0);
+  }
 
   @override
   Widget build(BuildContext context) {
