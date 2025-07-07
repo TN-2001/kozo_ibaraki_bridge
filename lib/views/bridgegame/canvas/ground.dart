@@ -1,27 +1,58 @@
 import 'package:flutter/material.dart';
 
-class Ground extends StatelessWidget {
-  const Ground({super.key, required this.cellSize});
+import '../../../constants/paths.dart';
 
-  final double cellSize;
+class Ground extends StatelessWidget {
+  const Ground({super.key, required this.constWidth, required this.canvasWidth, required this.canvasHeight});
+
+  final double canvasWidth;
+  final double canvasHeight;
+  final double constWidth;
+
+
+  Widget grass(double posx) {
+    return Transform(
+      transform: Matrix4.translationValues(posx, canvasHeight * 0.651 - canvasHeight * 0.2, 0),
+      child: Image.asset(ImagePass.grass, width: canvasHeight * 0.4, height: canvasHeight * 0.4,),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: _GroundPainter(
-        cellSize: cellSize,
-      ),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        // 地面
+        SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: CustomPaint(
+            painter: _GroundPainter(
+              constWidth: constWidth,
+            ),
+          ),
+        ),
+        // 草
+        grass(constWidth - canvasWidth * 0.5 - canvasHeight * (0.2 + 0.4 * 0)),
+        grass(constWidth - canvasWidth * 0.5 - canvasHeight * (0.2 + 0.4 * 1)),
+        grass(constWidth - canvasWidth * 0.5 - canvasHeight * (0.2 + 0.4 * 2)),
+        grass(constWidth - canvasWidth * 0.5 - canvasHeight * (0.2 + 0.4 * 3)),
+        grass(- constWidth + canvasWidth * 0.5 + canvasHeight * (0.2 + 0.4 * 0)),
+        grass(- constWidth + canvasWidth * 0.5 + canvasHeight * (0.2 + 0.4 * 1)),
+        grass(- constWidth + canvasWidth * 0.5 + canvasHeight * (0.2 + 0.4 * 2)),
+        grass(- constWidth + canvasWidth * 0.5 + canvasHeight * (0.2 + 0.4 * 3)),
+      ],
     );
   }
 }
 
 class _GroundPainter extends CustomPainter {
   _GroundPainter({
-    required this.cellSize,
+    required this.constWidth,
   });
 
 
-  final double cellSize;
+  final double constWidth;
 
 
   @override
@@ -40,18 +71,18 @@ class _GroundPainter extends CustomPainter {
     Paint paint = Paint()
       ..color = const Color.fromARGB(255, 0, 0, 0)
       ..style = PaintingStyle.fill;
-    Rect lrect = Rect.fromLTRB(0, size.height, cellSize * 2, size.height + cellSize);
+    Rect lrect = Rect.fromLTRB(0, size.height, constWidth, size.height + constWidth / 2);
     canvas.drawRect(lrect, paint);
-    Rect rrect = Rect.fromLTRB(size.width - cellSize * 2, size.height, size.width, size.height + cellSize);
+    Rect rrect = Rect.fromLTRB(size.width - constWidth, size.height, size.width, size.height + constWidth / 2);
     canvas.drawRect(rrect, paint);
 
     // 土台
     Paint tpaint = Paint()
       ..color = const Color.fromARGB(255, 121, 121, 121)
       ..style = PaintingStyle.fill;
-    Rect ltrect = Rect.fromLTRB(-cellSize * 2, size.height + cellSize, cellSize * 2, size.height + cellSize * 4);
+    Rect ltrect = Rect.fromLTRB(lrect.left - constWidth, lrect.bottom, lrect.right, lrect.bottom + constWidth * 2);
     canvas.drawRect(ltrect, tpaint);
-    Rect rtrect = Rect.fromLTRB(size.width - cellSize * 2, size.height + cellSize, size.width + cellSize * 2, size.height + cellSize * 4);
+    Rect rtrect = Rect.fromLTRB(rrect.left, rrect.bottom, rrect.right + constWidth, rrect.bottom + constWidth * 2);
     canvas.drawRect(rtrect, tpaint);
 
     // 地面
@@ -59,17 +90,17 @@ class _GroundPainter extends CustomPainter {
       ..color = const Color.fromARGB(255, 149, 97, 52)
       ..style = PaintingStyle.fill;
     Path lgpath = Path()
-      ..moveTo(-cellSize * 100, size.height + cellSize * 4)
-      ..lineTo(cellSize * 2, size.height + cellSize * 4)
-      ..lineTo(cellSize * 25, size.height + cellSize * 100)
-      ..lineTo(-cellSize * 100, size.height + cellSize * 100)
+      ..moveTo(lrect.right - size.height * 4, size.height * 1.15)
+      ..lineTo(lrect.right, size.height * 1.15)
+      ..lineTo(lrect.right + size.height * 0.75, size.height * (1.15 + 4))
+      ..lineTo(lrect.right - size.height * 4, size.height * (1.15 + 4))
       ..close();
     canvas.drawPath(lgpath, gpaint);
     Path rgpath = Path()
-      ..moveTo(size.width + cellSize * 100, size.height + cellSize * 4)
-      ..lineTo(size.width - cellSize * 2, size.height + cellSize * 4)
-      ..lineTo(size.width - cellSize * 25, size.height + cellSize * 100)
-      ..lineTo(size.width + cellSize * 100, size.height + cellSize * 100)
+      ..moveTo(rrect.left + size.height * 4, size.height * 1.15)
+      ..lineTo(rrect.left, size.height * 1.15)
+      ..lineTo(rrect.left - size.height * 0.75, size.height * (1.15 + 4))
+      ..lineTo(rrect.left + size.height * 4, size.height * (1.15 + 4))
       ..close();
     canvas.drawPath(rgpath, gpaint);
   }

@@ -1,11 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:kozo_ibaraki_bridge/constants/paths.dart';
 import 'package:kozo_ibaraki_bridge/utils/camera.dart';
 import 'package:kozo_ibaraki_bridge/utils/my_painter.dart';
+import 'package:kozo_ibaraki_bridge/views/bridgegame/canvas/ground.dart';
 import 'package:kozo_ibaraki_bridge/views/bridgegame/canvas/sea.dart';
 import 'package:kozo_ibaraki_bridge/views/bridgegame/models/bridgegame_controller.dart';
 
 class BridgegameCanvas extends StatelessWidget {
-  const BridgegameCanvas({super.key});
+  BridgegameCanvas({super.key, required this.controller});
+
+  final BridgegameController controller;
+  final Camera camera = Camera(0,Offset.zero,Offset.zero); // カメラ
+
+
+  // カメラの拡大率を取得
+  double _getCameraScale(Rect screenRect, Rect worldRect){
+    double width = worldRect.width;
+    double height = worldRect.height;
+    if(width == 0 && height == 0){
+      width = 100;
+    }
+    if(screenRect.width / width < screenRect.height / height){
+      return screenRect.width / width;
+    }
+    else{
+      return screenRect.height / height;
+    }
+  }
+
+  Widget paintCanvas(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: double.infinity,
+      child: GestureDetector(
+        onPanStart: (details) {
+          if (controller.isCalculation) {
+            return;
+          }
+          controller.saveToUndo();
+          controller.paintPixel(camera.screenToWorld(details.localPosition));
+        },
+        onPanUpdate: (details) {
+          if (controller.isCalculation) {
+            return;
+          }
+          controller.paintPixel(camera.screenToWorld(details.localPosition));
+        },
+        onTapDown: (details) {
+          controller.saveToUndo();
+          controller.paintPixel(camera.screenToWorld(details.localPosition));
+        },
+        child: CustomPaint(
+          painter: BridgegamePainter(data: controller, camera: camera,),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +71,18 @@ class BridgegameCanvas extends StatelessWidget {
             width = height * (16 / 9);
           }
 
+          camera.init(
+            _getCameraScale(Rect.fromLTRB((width/10), (height/4), width-(width/10), height-(height/4)), controller.nodeRect), 
+            controller.nodeRect.center, 
+            Offset(constraints.maxWidth / 2, constraints.maxHeight / 2)
+          );
+          final double canvasWidth = camera.scale * controller.nodeRect.width;
+          final double canvasHeight = camera.scale * controller.nodeRect.height;
+          final double cellSize = camera.scale;
+
+
           return Center(
             child: Container(
-              width: width,
-              height: height,
               color: const Color.fromARGB(255, 255, 255, 255),
               child: Stack(
                 alignment: Alignment.center,
@@ -32,28 +90,33 @@ class BridgegameCanvas extends StatelessWidget {
                   // 雲
                   Transform(
                     transform: Matrix4.translationValues(0, -height * 0.125, 0),
-                    child: Image.asset("assets/images/cloud.png"),
+                    child: Image.asset(ImagePass.cloud),
                   ),
                   // 太陽
                   Transform(
                     transform: Matrix4.translationValues(-width * 0.3, -height * 0.375, 0),
-                    child: Image.asset("assets/images/sun.png", width: height * 0.2, height: height * 0.2,),
+                    child: Image.asset(ImagePass.sun, width: height * 0.2, height: height * 0.2,),
                   ),
                   // 名前
                   Transform(
                     transform: Matrix4.translationValues(width * 0.2, -height * 0.375, 0),
-                    child: Image.asset("assets/images/name.png", width: height, height: height * 0.5,),
+                    child: Image.asset(ImagePass.name, width: height, height: height * 0.5,),
                   ),
                   // 海
                   Sea(),
+                  // 船
+                  Transform(
+                    transform: Matrix4.translationValues(-canvasWidth * 0.2, height * 0.375, 0),
+                    child: Image.asset(ImagePass.ship, width: height * 0.5, height: height * 0.5,),
+                  ),
                   // 土台
                   SizedBox(
-                    width: width,
-                    height: height,
-                    child: CustomPaint(
-                      // painter: BridgegamePainter(data: BridgegameData(), camera: Camera(),),
-                    ),
+                    width: canvasWidth,
+                    height: canvasHeight,
+                    child: Ground(constWidth: cellSize*2, canvasWidth: canvasWidth, canvasHeight: canvasHeight,),
                   ),
+                  // 
+                  paintCanvas(context),
                 ],
               ),
             ),
@@ -64,6 +127,7 @@ class BridgegameCanvas extends StatelessWidget {
   }
 }
 
+
 class BridgegamePainter extends CustomPainter {
   BridgegamePainter({required this.data, required this.camera,});
 
@@ -72,20 +136,11 @@ class BridgegamePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Rect dataRect = data.nodeRect;
-
     Paint paint = Paint();
-
-    // カメラの初期化
-    camera.init(
-      _getCameraScale(Rect.fromLTRB((size.width/10), (size.height/4), size.width-(size.width/10), size.height-(size.height/4)), dataRect), 
-      dataRect.center, 
-      Offset(size.width/2, size.height/2)
-    );
-
     if (!data.isCalculation) {
       // 要素
-      _drawElem(false, canvas); // 要素
+      // _drawElem(false, canvas); // 要素
+      _drawElemPaint(canvas, size);
       _drawElemEdge(false, canvas); // 要素の辺
 
       // 中心線
@@ -131,7 +186,7 @@ class BridgegamePainter extends CustomPainter {
         data.dispScale = 90.0; // 3点曲げの変位倍率
         // data.dispScale = 3;
       } else if (data.powerIndex == 1) {
-        data.dispScale = 2.0; // 4点曲げの変位倍率
+        data.dispScale = 100.0; // 4点曲げの変位倍率
       } else {
         data.dispScale = 100.0; // その他の変位倍率
       }
@@ -213,27 +268,12 @@ class BridgegamePainter extends CustomPainter {
     }
   }
 
-  // カメラの拡大率を取得
-  double _getCameraScale(Rect screenRect, Rect worldRect){
-    double width = worldRect.width;
-    double height = worldRect.height;
-    if(width == 0 && height == 0){
-      width = 100;
-    }
-    if(screenRect.width / width < screenRect.height / height){
-      return screenRect.width / width;
-    }
-    else{
-      return screenRect.height / height;
-    }
-  }
-
-
   // 要素の辺
   void _drawElemEdge(bool isAfter, Canvas canvas){
     Paint paint = Paint()
-      ..color = const Color.fromARGB(255, 132, 132, 132)
-      ..style = PaintingStyle.stroke;
+      ..color = const Color.fromARGB(255, 220, 220, 220)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.2;
 
     if(data.elemListLength > 0){
       for(int i = 0; i < data.elemListLength; i++){
@@ -266,16 +306,18 @@ class BridgegamePainter extends CustomPainter {
       ..color = const Color.fromARGB(255, 49, 49, 49);
 
     for(int i = 0; i < data.elemListLength; i++){
-      if(data.getElem(i).e > 0){
+      if(data.getElem(i).e > 0 || data.pixelColors[i].a != 0){
         if(isAfter && (data.selectedResultMax != 0 || data.selectedResultMin != 0)){
           paint.color = MyPainter.getColor((data.getSelectedResult(i) - data.selectedResultMin) / (data.selectedResultMax - data.selectedResultMin) * 100);
         }
         else if(!isAfter){
           if(data.getElem(i).isCanPaint){
-            paint.color = const Color.fromARGB(255, 184, 25, 63);
+            // paint.color = const Color.fromARGB(255, 184, 25, 63);
+            paint.color = data.pixelColors[i];
           }
           else{
-            paint.color = const Color.fromARGB(255, 106, 23, 43);
+            // paint.color = const Color.fromARGB(255, 106, 23, 43);
+            paint.color = data.pixelColors[i];
           }
         }
 
@@ -298,6 +340,34 @@ class BridgegamePainter extends CustomPainter {
       }
     }
   }
+
+  void _drawElemPaint(Canvas canvas, Size size){
+    Paint paint = Paint()
+      ..color = const Color.fromARGB(255, 49, 49, 49);
+
+    for(int i = 0; i < data.elemListLength; i++){
+      if(data.getElem(i).isCanPaint){
+        paint.color = data.pixelColors[i];
+      }
+      else{
+        paint.color = data.pixelColors[i];
+      }
+
+      final path = Path();
+      for(int j = 0; j < 4; j++){
+        Offset pos;
+        pos = camera.worldToScreen(data.getElem(i).nodeList[j].pos);
+        if(j == 0){
+          path.moveTo(pos.dx, pos.dy);
+        }else{
+          path.lineTo(pos.dx, pos.dy);
+        }
+      }
+      path.close();
+      canvas.drawPath(path, paint);
+    }
+  }
+
 
   @override
   bool shouldRepaint(covariant BridgegamePainter oldDelegate) {

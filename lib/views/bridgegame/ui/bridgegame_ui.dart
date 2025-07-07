@@ -5,12 +5,13 @@ import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_icon_button.dart';
 import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_toggle_buttons.dart';
 import 'package:kozo_ibaraki_bridge/constants/colors.dart';
 import 'package:kozo_ibaraki_bridge/constants/paths.dart';
-import 'package:kozo_ibaraki_bridge/views/bridgegame/models/pixel_canvas_controller.dart';
+import 'package:kozo_ibaraki_bridge/views/bridgegame/models/bridgegame_controller.dart';
 
 class BridgegameUI extends StatefulWidget {
   const BridgegameUI({super.key, required this.controller});
 
-  final PixelCanvasController controller;
+  // final PixelCanvasController controller;
+  final BridgegameController controller;
 
   @override
   State<BridgegameUI> createState() => _BridgegameUIState();
@@ -31,13 +32,7 @@ class _BridgegameUIState extends State<BridgegameUI> {
     setState(() {
       _toolIndex = index;
     });
-  
-    if (_toolIndex == 0) {
-      widget.controller.selectedColor = const Color.fromARGB(255, 197, 95, 95);
-    }
-    else {
-      widget.controller.selectedColor = const Color.fromARGB(0, 255, 255, 255);
-    }
+    widget.controller.changeToolIndex(_toolIndex);
   }
 
   void _onPressedUndoButton() {
@@ -49,7 +44,7 @@ class _BridgegameUIState extends State<BridgegameUI> {
   }
 
   void _onPressedMirrorButton() {
-
+    widget.controller.symmetrical();
   }
 
   void _onPressedClearButton() {
@@ -60,14 +55,21 @@ class _BridgegameUIState extends State<BridgegameUI> {
     setState(() {
       _powerIndex = indent;
     });
+    widget.controller.changePowerIndex(_powerIndex);
   }
 
   void _onPressedAnalysisButton() {
-
+    setState(() {
+      state = 1;
+    });
+    widget.controller.calculation();
   }
 
   void _onPressedEditButton() {
-
+    setState(() {
+      state = 0;
+    });
+    widget.controller.resetCalculation();
   }
 
 

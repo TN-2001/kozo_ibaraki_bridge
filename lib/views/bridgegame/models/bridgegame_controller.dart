@@ -8,6 +8,11 @@ class BridgegameController extends ChangeNotifier {
     _init();
   }
 
+  Color selectedColor = Colors.black;
+  late List<Color> pixelColors;
+  final List<List<Color>> undoStack = [];
+  final List<List<Color>> redoStack = [];
+
   /*
     パラメータ
   */
@@ -56,7 +61,7 @@ class BridgegameController extends ChangeNotifier {
   int get onElemListLength {
     int elemCount = 0;
     for (int i = 0; i < _elemList.length; i++) {
-      if (_elemList[i].e > 0) {
+      if (pixelColors[i].a != 0) {
         elemCount++;
       }
     }
@@ -125,11 +130,19 @@ class BridgegameController extends ChangeNotifier {
       _elemList[gridWidth+i].isCanPaint = false;
       _elemList[gridWidth+i].e = 1;
     }
+
+    _initCanvas();
   }
 
   // ツールの変更
   void changeToolIndex(int index) {
     _toolIndex = index;
+    if (_toolIndex == 0) {
+      selectedColor = const Color.fromARGB(255, 184, 25, 63); // ツールが選択モードのときは選択要素をクリア
+    }
+    else {
+      selectedColor = const Color.fromARGB(0, 0, 0, 0); // ツールが選択モード以外のときは黒色に設定
+    }
   }
 
   // 荷重条件の変更
@@ -137,19 +150,92 @@ class BridgegameController extends ChangeNotifier {
     _powerIndex = index;
   }
 
-  // 対称化
-  void symmetrical() {
-    for (int y = 0; y < _gridHeight; y++) {
-      for (int x = 0; x < _gridWidth / 2; x++) {
-        if (_elemList[_gridWidth * y + _gridWidth - x - 1].isCanPaint) {
-          _elemList[_gridWidth * y + _gridWidth - x - 1].e = _elemList[_gridWidth * y + x].e;
-        }
+  void _initCanvas() {
+    _initPixelColors();
+    undoStack.clear();
+    redoStack.clear();
+    notifyListeners();
+  }
+
+  _initPixelColors() {
+    pixelColors = List.generate(_gridWidth * _gridHeight, (_) => const Color.fromARGB(0, 255, 255, 255));
+    for (int i = 0; i < elemListLength; i++) {
+      if (!_elemList[i].isCanPaint) {
+        pixelColors[i] = const Color.fromARGB(255, 106, 23, 43); // 塗れない要素は透明にする
       }
     }
   }
 
+  void saveToUndo() {
+    undoStack.add(List<Color>.from(pixelColors));
+    redoStack.clear();
+  }
+
+  void undo() {
+    if (undoStack.isNotEmpty) {
+      redoStack.add(List<Color>.from(pixelColors));
+      pixelColors = undoStack.removeLast();
+      notifyListeners();
+    }
+  }
+
+  void redo() {
+    if (redoStack.isNotEmpty) {
+      undoStack.add(List<Color>.from(pixelColors));
+      pixelColors = redoStack.removeLast();
+      notifyListeners();
+    }
+  }
+
+  // 対称化
+  void symmetrical() {
+    saveToUndo();
+    for (int y = 0; y < _gridHeight; y++) {
+      for (int x = 0; x < _gridWidth / 2; x++) {
+        if (_elemList[_gridWidth * y + _gridWidth - x - 1].isCanPaint) {
+          // _elemList[_gridWidth * y + _gridWidth - x - 1].e = _elemList[_gridWidth * y + x].e;
+          pixelColors[_gridWidth * y + _gridWidth - x - 1] = pixelColors[_gridWidth * y + x];
+        }
+      }
+    }
+    notifyListeners();
+  }
+
+  void clear() {
+    saveToUndo();
+    _initPixelColors();
+    notifyListeners();
+  }
+
+  void paintPixel(Offset localPos) {
+    selectElem(localPos);
+    final index = _selectedElemIndex;
+
+    if (index == -1) {
+      return; // 選択要素がない場合は終了
+    }
+
+    if (pixelColors[index] != selectedColor && _elemList[index].isCanPaint == true) {
+      pixelColors[index] = selectedColor;
+      notifyListeners();
+    }
+  }
+
+
+
+  void paintToElem() {
+    for (int i = 0; i < _elemList.length; i++) {
+      if (pixelColors[i].a != 0) {
+        _elemList[i].e = 1; // 塗られた要素は1に設定
+      } else {
+        _elemList[i].e = 0; // 塗られていない要素は0に設定
+      }
+    }
+  }
   // 解析
   void calculation(){
+    paintToElem();
+
     const int npx1 = 70;
     const int npx2 = 25;
     const int nd = 2;
@@ -298,49 +384,92 @@ class BridgegameController extends ChangeNotifier {
       maxBecPos = ss; // 体積を基準にする
     } else if (powerIndex == 1) { // 4点曲げ
       // print(nodeList[23].becPos.dy.abs());
-      maxBecPos = _nodeList[23].becPos.dy.abs();
+      // maxBecPos = _nodeList[23].becPos.dy.abs();
+      // if (elemLength >= 70 && elemLength < 140) {
+      //   b0 =  3.83095784081963E+00;
+      //   b1 = -5.80273668805609E-02;
+      //   b2 =  4.53615168754680E-04;
+      //   vvar = b0 + b1 * (elemLength - 70) + b2 * (elemLength - 70) * (elemLength - 105);
+      // } else if (elemLength >= 140 && elemLength < 210) {
+      //   b0 =  8.80399322629337E-01;
+      //   b1 = -9.72569493226677E-03;
+      //   b2 =  5.66108143337244E-05;
+      //   vvar = b0 + b1 * (elemLength - 140) + b2 * (elemLength - 140) * (elemLength - 175);
+      // } else if (elemLength >= 210 && elemLength < 350) {
+      //   b0 =  3.38297172488288E-01;
+      //   b1 = -2.29427110273659E-03;
+      //   b2 =  9.29880951489469E-06;
+      //   vvar = b0 + b1 * (elemLength - 210) + b2 * (elemLength - 210) * (elemLength - 280);
+      // } else if (elemLength >= 350 && elemLength < 490) {
+      //   b0 =  1.08227551351134E-01;
+      //   b1 = -5.30257640222751E-04;
+      //   b2 =  1.54965659068093E-06;
+      //   vvar = b0 + b1 * (elemLength - 350) + b2 * (elemLength - 350) * (elemLength - 420);
+      // } else if (elemLength >= 490 && elemLength < 630) {
+      //   b0 =  4.91781163086219E-02;
+      //   b1 = -1.95951437338516E-04;
+      //   b2 =  4.86441085534530E-07;
+      //   vvar = b0 + b1 * (elemLength - 490) + b2 * (elemLength - 490) * (elemLength - 560);
+      // } else if (elemLength >= 630 && elemLength < 770) {
+      //   b0 =  2.65120377194681E-02;
+      //   b1 = -8.64750318306500E-05;
+      //   b2 =  1.86445191479459E-07;
+      //   vvar = b0 + b1 * (elemLength - 630) + b2 * (elemLength - 630) * (elemLength - 700);
+      // } else if (elemLength >= 770 && elemLength < 910) {
+      //   b0 =  1.62326961396758E-02;
+      //   b1 = -4.33425084092314E-05;
+      //   b2 =  8.18144201538573E-08;
+      //   vvar = b0 + b1 * (elemLength - 770) + b2 * (elemLength - 770) * (elemLength - 840);
+      // } else if (elemLength >= 910 && elemLength < 1050) {
+      //   b0 =  1.09665262798912E-02;
+      //   b1 = -2.39707508636930E-05;
+      //   b2 =  4.00697386158101E-08;
+      //   vvar = b0 + b1 * (elemLength - 910) + b2 * (elemLength - 910) * (elemLength - 980);
+      // }
+      // a = 4;
       if (elemLength >= 70 && elemLength < 140) {
-        b0 =  3.83095784081963E+00;
-        b1 = -5.80273668805609E-02;
-        b2 =  4.53615168754680E-04;
+        b0 =  1.77012667649855E+02;
+        b1 = -2.57179050428157E+00;
+        b2 =  1.79876703762735E-02;
         vvar = b0 + b1 * (elemLength - 70) + b2 * (elemLength - 70) * (elemLength - 105);
       } else if (elemLength >= 140 && elemLength < 210) {
-        b0 =  8.80399322629337E-01;
-        b1 = -9.72569493226677E-03;
-        b2 =  5.66108143337244E-05;
+        b0 =  4.10571247720151E+01;
+        b1 = -4.73060707771860E-01;
+        b2 =  3.28210701347351E-03;
         vvar = b0 + b1 * (elemLength - 140) + b2 * (elemLength - 140) * (elemLength - 175);
       } else if (elemLength >= 210 && elemLength < 350) {
-        b0 =  3.38297172488288E-01;
-        b1 = -2.29427110273659E-03;
-        b2 =  9.29880951489469E-06;
+        b0 =  1.59840374109950E+01;
+        b1 = -1.06922562418232E-01;
+        b2 =  4.28744990245488E-04;
         vvar = b0 + b1 * (elemLength - 210) + b2 * (elemLength - 210) * (elemLength - 280);
       } else if (elemLength >= 350 && elemLength < 490) {
-        b0 =  1.08227551351134E-01;
-        b1 = -5.30257640222751E-04;
-        b2 =  1.54965659068093E-06;
+        b0 =  5.21657957684830E+00;
+        b1 = -2.53877094150193E-02;
+        b2 =  7.32277971256143E-05;
         vvar = b0 + b1 * (elemLength - 350) + b2 * (elemLength - 350) * (elemLength - 420);
       } else if (elemLength >= 490 && elemLength < 630) {
-        b0 =  4.91781163086219E-02;
-        b1 = -1.95951437338516E-04;
-        b2 =  4.86441085534530E-07;
+        b0 =  2.37993267057662E+00;
+        b1 = -9.51974619535257E-03;
+        b2 =  2.34769465151367E-05;
         vvar = b0 + b1 * (elemLength - 490) + b2 * (elemLength - 490) * (elemLength - 560);
       } else if (elemLength >= 630 && elemLength < 770) {
-        b0 =  2.65120377194681E-02;
-        b1 = -8.64750318306500E-05;
-        b2 =  1.86445191479459E-07;
+        b0 =  1.27724227907560E+00;
+        b1 = -4.22520224732538E-03;
+        b2 =  9.08016272653367E-06;
         vvar = b0 + b1 * (elemLength - 630) + b2 * (elemLength - 630) * (elemLength - 700);
       } else if (elemLength >= 770 && elemLength < 910) {
-        b0 =  1.62326961396758E-02;
-        b1 = -4.33425084092314E-05;
-        b2 =  8.18144201538573E-08;
+        b0 =  7.74699559170076E-01;
+        b1 = -2.12251913158403E-03;
+        b2 =  4.00163708634797E-06;
         vvar = b0 + b1 * (elemLength - 770) + b2 * (elemLength - 770) * (elemLength - 840);
       } else if (elemLength >= 910 && elemLength < 1050) {
-        b0 =  1.09665262798912E-02;
-        b1 = -2.39707508636930E-05;
-        b2 =  4.00697386158101E-08;
+        b0 =  5.16762924194522E-01;
+        b1 = -1.17448912543101E-03;
+        b2 =  1.96469107672979E-06;
         vvar = b0 + b1 * (elemLength - 910) + b2 * (elemLength - 910) * (elemLength - 980);
       }
-      a = 4;
+      a = 3.5;
+      maxBecPos = ss; // 体積を基準にする
     } else { // 自重
       if (elemLength >= 70 && elemLength < 140) {
         b0 =  8.33226515366013E+01;
