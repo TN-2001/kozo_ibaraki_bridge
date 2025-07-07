@@ -5,18 +5,18 @@ import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_icon_button.dart';
 import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_toggle_buttons.dart';
 import 'package:kozo_ibaraki_bridge/constants/colors.dart';
 import 'package:kozo_ibaraki_bridge/constants/paths.dart';
-import 'package:kozo_ibaraki_bridge/views/main/models/pixel_canvas_controller.dart';
+import 'package:kozo_ibaraki_bridge/views/bridgegame/models/pixel_canvas_controller.dart';
 
-class MainUI extends StatefulWidget {
-  const MainUI({super.key, required this.controller});
+class BridgegameUI extends StatefulWidget {
+  const BridgegameUI({super.key, required this.controller});
 
   final PixelCanvasController controller;
 
   @override
-  State<MainUI> createState() => _MainUIState();
+  State<BridgegameUI> createState() => _BridgegameUIState();
 }
 
-class _MainUIState extends State<MainUI> {
+class _BridgegameUIState extends State<BridgegameUI> {
 
   int state = 0;
   int _toolIndex = 0;

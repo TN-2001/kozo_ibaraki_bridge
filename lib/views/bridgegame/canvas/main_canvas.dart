@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kozo_ibaraki_bridge/constants/paths.dart';
-import 'package:kozo_ibaraki_bridge/views/main/canvas/ground.dart';
-import 'package:kozo_ibaraki_bridge/views/main/canvas/sea.dart';
-import 'package:kozo_ibaraki_bridge/views/main/models/pixel_canvas_controller.dart';
-import 'package:kozo_ibaraki_bridge/views/main/canvas/pixel_paint_area.dart';
+import 'package:kozo_ibaraki_bridge/views/bridgegame/canvas/ground.dart';
+import 'package:kozo_ibaraki_bridge/views/bridgegame/canvas/sea.dart';
+import 'package:kozo_ibaraki_bridge/views/bridgegame/models/pixel_canvas_controller.dart';
+import 'package:kozo_ibaraki_bridge/views/bridgegame/canvas/pixel_paint_area.dart';
 
 class MainCanvas extends StatefulWidget {
   const MainCanvas({super.key, required this.controller});

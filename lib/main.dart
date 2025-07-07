@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kozo_ibaraki_bridge/views/main/main_page.dart';
+import 'package:kozo_ibaraki_bridge/views/bridgegame/bridgegame_page.dart';
 
 
 void main() {
@@ -17,7 +17,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: MainPage(),
+      home: BridgegamePage(),
     );
   }
 }

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:kozo_ibaraki_bridge/utils/my_calculator.dart';
 import 'des_fem70x25.dart';
 
-class BridgegameData extends ChangeNotifier {
-  BridgegameData() {
+class BridgegameController extends ChangeNotifier {
+  BridgegameController() {
     _init();
   }
 

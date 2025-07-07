@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kozo_ibaraki_bridge/views/main/canvas/pixel_painter.dart';
+import 'package:kozo_ibaraki_bridge/views/bridgegame/canvas/pixel_painter.dart';
 import '../models/pixel_canvas_controller.dart';
 
 class PixelPaintArea extends StatefulWidget {

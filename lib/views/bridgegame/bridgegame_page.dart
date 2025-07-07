@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:kozo_ibaraki_bridge/components/base_divider.dart';
 import 'package:kozo_ibaraki_bridge/constants/colors.dart';
-import 'package:kozo_ibaraki_bridge/views/main/canvas/main_canvas.dart';
-import 'package:kozo_ibaraki_bridge/views/main/models/pixel_canvas_controller.dart';
-import 'package:kozo_ibaraki_bridge/views/main/ui/main_ui.dart';
+import 'package:kozo_ibaraki_bridge/views/bridgegame/canvas/main_canvas.dart';
+import 'package:kozo_ibaraki_bridge/views/bridgegame/models/pixel_canvas_controller.dart';
+import 'package:kozo_ibaraki_bridge/views/bridgegame/ui/bridgegame_ui.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+class BridgegamePage extends StatefulWidget {
+  const BridgegamePage({super.key});
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<BridgegamePage> createState() => _BridgegamePageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _BridgegamePageState extends State<BridgegamePage> {
   late PixelCanvasController controller;
 
   @override
@@ -23,6 +23,7 @@ class _MainPageState extends State<MainPage> {
     controller.resizeCanvasTo(70, 25);
   }
 
+
   void _update() => setState(() {});
 
 
@@ -32,7 +33,7 @@ class _MainPageState extends State<MainPage> {
       backgroundColor: BaseColors.baseColor,
       body: Column(
         children: [
-          MainUI(controller: controller,),
+          BridgegameUI(controller: controller,),
 
           BaseDivider(),
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kozo_ibaraki_bridge/utils/camera.dart';
 import 'package:kozo_ibaraki_bridge/utils/my_painter.dart';
-import 'package:kozo_ibaraki_bridge/views/main/canvas/sea.dart';
-import 'package:kozo_ibaraki_bridge/views/main/models/bridgegame_data.dart';
+import 'package:kozo_ibaraki_bridge/views/bridgegame/canvas/sea.dart';
+import 'package:kozo_ibaraki_bridge/views/bridgegame/models/bridgegame_controller.dart';
 
 class BridgegameCanvas extends StatelessWidget {
   const BridgegameCanvas({super.key});
@@ -67,7 +67,7 @@ class BridgegameCanvas extends StatelessWidget {
 class BridgegamePainter extends CustomPainter {
   BridgegamePainter({required this.data, required this.camera,});
 
-  final BridgegameData data;
+  final BridgegameController data;
   Camera camera; // カメラ
 
   @override
