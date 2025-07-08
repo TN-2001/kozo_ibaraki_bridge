@@ -10,7 +10,6 @@ import 'package:kozo_ibaraki_bridge/views/bridgegame/models/bridgegame_controlle
 class BridgegameUI extends StatefulWidget {
   const BridgegameUI({super.key, required this.controller});
 
-  // final PixelCanvasController controller;
   final BridgegameController controller;
 
   @override
@@ -22,7 +21,7 @@ class _BridgegameUIState extends State<BridgegameUI> {
   int state = 0;
   int _toolIndex = 0;
   int _powerIndex = 0;
-  
+
 
   void _onPressedMenuButton() {
 
@@ -58,11 +57,38 @@ class _BridgegameUIState extends State<BridgegameUI> {
     widget.controller.changePowerIndex(_powerIndex);
   }
 
-  void _onPressedAnalysisButton() {
-    setState(() {
-      state = 1;
-    });
-    widget.controller.calculation();
+  Future<void> _onPressedAnalysisButton() async{    
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.black54, // 背景を暗く
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.white), // インジケーターを白く
+          ),
+        );
+      },
+    );
+
+    // 3秒間の処理時間をシミュレート
+    await widget.controller.calculation();
+
+    // ダイアログを閉じる
+    if (!mounted) return;
+    Navigator.of(context).pop();
+    
+    if (widget.controller.isCalculation) {
+      setState(() {
+        state = 1;
+      });
+    }
+
+    // 完了メッセージを表示
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('処理が完了しました')),
+    );
   }
 
   void _onPressedEditButton() {

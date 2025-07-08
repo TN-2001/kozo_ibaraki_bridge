@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kozo_ibaraki_bridge/utils/my_calculator.dart';
 import 'des_fem70x25.dart';
@@ -233,7 +234,12 @@ class BridgegameController extends ChangeNotifier {
     }
   }
   // 解析
-  void calculation(){
+  static dynamic runDesFEM70x25(List<dynamic> args) {
+    var zeroOneList = args[0];
+    var powerIndex = args[1];
+    return desFEM70x25(zeroOneList, powerIndex);
+  }
+  Future<void> calculation() async {
     paintToElem();
 
     const int npx1 = 70;
@@ -248,7 +254,7 @@ class BridgegameController extends ChangeNotifier {
     }
 
     // 解析実行
-    final result = desFEM70x25(zeroOneList, powerIndex);
+    final result = await compute(runDesFEM70x25, [zeroOneList, _powerIndex]);
 
     // 変位を入手
     for (int n2 = 0; n2 < npx2+1; n2++) {
