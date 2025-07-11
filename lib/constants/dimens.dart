@@ -24,6 +24,8 @@ class UIDimens {
   Tool bar dimensions
 */
 class ToolBarDimens {
+  static double width = ToolUIDimens.width + ToolUIDimens.gapWidth * 2;
+  static double height = ToolUIDimens.height + ToolUIDimens.gapWidth * 2;
   static double dividerWidth = 1.0;
   static double dividerIndent = 1.0;
 }
@@ -33,8 +35,8 @@ class ToolBarDimens {
   Tool UI dimensions
 */
 class ToolUIDimens {
-  static double width = 50.0;
-  static double height = 50.0;
+  static double width = 40.0;
+  static double height = 40.0;
   static double borderWidth = 0.0;
 
   static double gapWidth = 5.0;

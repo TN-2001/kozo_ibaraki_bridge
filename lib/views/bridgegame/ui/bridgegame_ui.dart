@@ -4,6 +4,7 @@ import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_dropdown_button.dart
 import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_icon_button.dart';
 import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_toggle_buttons.dart';
 import 'package:kozo_ibaraki_bridge/constants/colors.dart';
+import 'package:kozo_ibaraki_bridge/constants/dimens.dart';
 import 'package:kozo_ibaraki_bridge/constants/paths.dart';
 import 'package:kozo_ibaraki_bridge/views/bridgegame/models/bridgegame_controller.dart';
 
@@ -119,12 +120,17 @@ class _BridgegameUIState extends State<BridgegameUI> {
     if (state == 0) {
       return Container(
         width: double.infinity,
+        height: ToolBarDimens.height,
         color: BaseColors.baseColor,
         child: Row(
           children: [
+            SizedBox(width: ToolUIDimens.gapWidth,),
+
             _menuButton(),
 
+            SizedBox(width: ToolUIDimens.gapWidth,),
             ToolBarDivider(isVertivcal: true,),
+            SizedBox(width: ToolUIDimens.gapWidth,),
 
             ToolToggleButtons(
               selectedIndex: _toolIndex,
@@ -136,7 +142,9 @@ class _BridgegameUIState extends State<BridgegameUI> {
               messages: ["筆", "消しゴム"],
             ),
 
+            SizedBox(width: ToolUIDimens.gapWidth,),
             ToolBarDivider(isVertivcal: true,),
+            SizedBox(width: ToolUIDimens.gapWidth,),
 
             ToolIconButton(
               onPressed: _onPressedUndoButton,
@@ -159,9 +167,11 @@ class _BridgegameUIState extends State<BridgegameUI> {
               message: "クリア", 
             ),
 
+            SizedBox(width: ToolUIDimens.gapWidth,),
             ToolBarDivider(isVertivcal: true,),
             Expanded(child: SizedBox()),
             ToolBarDivider(isVertivcal: true,),
+            SizedBox(width: ToolUIDimens.gapWidth,),
 
             ToolDropdownButton(
               selectedIndex: _powerIndex,
@@ -169,13 +179,17 @@ class _BridgegameUIState extends State<BridgegameUI> {
               items: ["3点曲げ", "4点曲げ", "自重"], 
             ),
 
+            SizedBox(width: ToolUIDimens.gapWidth,),
             ToolBarDivider(isVertivcal: true,),
+            SizedBox(width: ToolUIDimens.gapWidth,),
 
             ToolIconButton(
               onPressed: _onPressedAnalysisButton,
               icon: Icon(Icons.play_arrow),
               message: "解析",
             ),
+
+            SizedBox(width: ToolUIDimens.gapWidth,),
           ],
         ),
       );
@@ -186,17 +200,23 @@ class _BridgegameUIState extends State<BridgegameUI> {
         color: BaseColors.baseColor,
         child: Row(
           children: [
+            SizedBox(width: ToolUIDimens.gapWidth,),
+
             _menuButton(),
 
+            SizedBox(width: ToolUIDimens.gapWidth,),
             ToolBarDivider(isVertivcal: true,),
             Expanded(child: SizedBox()),
             ToolBarDivider(isVertivcal: true,),
+            SizedBox(width: ToolUIDimens.gapWidth,),
 
             ToolIconButton(
               onPressed: _onPressedEditButton,
               icon: Icon(Icons.restart_alt),
               message: "再編集",
             ),
+
+            SizedBox(width: ToolUIDimens.gapWidth,),
           ],
         ),
       );

@@ -14,7 +14,7 @@ class ToolBarDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isVertivcal) {
       return SizedBox(
-        height: ToolUIDimens.height,
+        height: ToolBarDimens.height,
         child: VerticalDivider(
           width: ToolBarDimens.dividerWidth,
           thickness: ToolBarDimens.dividerWidth,
