@@ -47,6 +47,10 @@ class BridgegameCanvas extends StatelessWidget {
           controller.paintPixel(camera.screenToWorld(details.localPosition));
         },
         onTapDown: (details) {
+          if (controller.isCalculation) {
+            controller.selectElem(camera.screenToWorld(details.localPosition));
+            return;
+          }
           controller.saveToUndo();
           controller.paintPixel(camera.screenToWorld(details.localPosition));
         },

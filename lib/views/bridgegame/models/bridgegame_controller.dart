@@ -581,6 +581,7 @@ class BridgegameController extends ChangeNotifier {
 
       if (MyCalculator.isPointInRectangle(pos, p0, p1, p2, p3)) {
         _selectedElemIndex = i;
+        notifyListeners();
         return;
       }
     }
