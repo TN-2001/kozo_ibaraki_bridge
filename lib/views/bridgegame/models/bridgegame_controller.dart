@@ -386,7 +386,7 @@ class BridgegameController extends ChangeNotifier {
         b2 =  1.19740054331377E-06;
         vvar = b0 + b1 * (elemLength - 910) + b2 * (elemLength - 910) * (elemLength - 980);
       }
-      a = 1.76;
+      a = 2.79;
       maxBecPos = ss; // 体積を基準にする
     } else if (powerIndex == 1) { // 4点曲げ
       // print(nodeList[23].becPos.dy.abs());
@@ -474,7 +474,7 @@ class BridgegameController extends ChangeNotifier {
         b2 =  1.96469107672979E-06;
         vvar = b0 + b1 * (elemLength - 910) + b2 * (elemLength - 910) * (elemLength - 980);
       }
-      a = 3.5;
+      a = 3.13;
       maxBecPos = ss; // 体積を基準にする
     } else { // 自重
       if (elemLength >= 70 && elemLength < 140) {

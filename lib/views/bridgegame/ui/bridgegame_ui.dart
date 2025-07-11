@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_bar_divider.dart';
-import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_dropdown_button.dart';
-import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_icon_button.dart';
-import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_toggle_buttons.dart';
-import 'package:kozo_ibaraki_bridge/constants/colors.dart';
-import 'package:kozo_ibaraki_bridge/constants/dimens.dart';
-import 'package:kozo_ibaraki_bridge/constants/paths.dart';
-import 'package:kozo_ibaraki_bridge/views/bridgegame/models/bridgegame_controller.dart';
+import '../../../components/tool_ui/tool_bar_divider.dart';
+import '../../../components/tool_ui/tool_dropdown_button.dart';
+import '../../../components/tool_ui/tool_icon_button.dart';
+import '../../../components/tool_ui/tool_toggle_buttons.dart';
+import '../../../constants/colors.dart';
+import '../../../constants/dimens.dart';
+import '../../../constants/paths.dart';
+import '../models/bridgegame_controller.dart';
 
 class BridgegameUI extends StatefulWidget {
   const BridgegameUI({super.key, required this.controller});
@@ -64,10 +64,20 @@ class _BridgegameUIState extends State<BridgegameUI> {
       barrierDismissible: false,
       barrierColor: Colors.black54, // 背景を暗く
       builder: (BuildContext context) {
-        return const Center(
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white), // インジケーターを白く
-          ),
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white), // インジケーターを白く
+            ),
+            SizedBox(height: 20), // インジケーターとテキストの間にスペースを追加
+            Text("解析中", 
+              style: TextStyle(
+                color: Colors.white, // テキストを白く
+                fontSize: 20,
+              ),
+            ),
+          ]
         );
       },
     );
