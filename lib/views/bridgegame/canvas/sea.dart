@@ -23,16 +23,16 @@ class _SeaPainter extends CustomPainter {
     Paint paint = Paint()
       ..color = const Color.fromARGB(255, 218, 233, 246)
       ..style = PaintingStyle.fill;
-    Rect rect = Rect.fromLTRB(0, size.height * 0.875, size.width, size.height * 2);
+    Rect rect = Rect.fromLTRB(0, size.height * 1.25, size.width, size.height * 4);
     canvas.drawRect(rect, paint);
     paint.color = const Color.fromARGB(255, 189, 217, 241);
-    rect = Rect.fromLTRB(0, size.height * (0.875 + 0.03), size.width, size.height * 2);
+    rect = Rect.fromLTRB(0, size.height * (1.25 + 0.06), size.width, size.height * 4);
     canvas.drawRect(rect, paint);
     paint.color = const Color.fromARGB(255, 153, 199, 234);
-    rect = Rect.fromLTRB(0, size.height * (0.875 + 0.03 * 2), size.width, size.height * 2);
+    rect = Rect.fromLTRB(0, size.height * (1.25 + 0.06 * 2), size.width, size.height * 4);
     canvas.drawRect(rect, paint);
     paint.color = const Color.fromARGB(255, 96, 178, 228);
-    rect = Rect.fromLTRB(0, size.height * (0.875 + 0.03 * 3), size.width, size.height * 2);
+    rect = Rect.fromLTRB(0, size.height * (1.25 + 0.06 * 3), size.width, size.height * 4);
     canvas.drawRect(rect, paint);
   }
 

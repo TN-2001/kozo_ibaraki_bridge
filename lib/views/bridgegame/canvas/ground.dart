@@ -78,11 +78,11 @@ class _GroundPainter extends CustomPainter {
 
     // 土台
     Paint tpaint = Paint()
-      ..color = const Color.fromARGB(255, 121, 121, 121)
+      ..color = const Color.fromARGB(255, 158, 158, 158)
       ..style = PaintingStyle.fill;
-    Rect ltrect = Rect.fromLTRB(lrect.left - constWidth, lrect.bottom, lrect.right, lrect.bottom + constWidth * 2);
+    Rect ltrect = Rect.fromLTRB(lrect.left - constWidth * 2, lrect.bottom, lrect.right, lrect.bottom + constWidth * 2);
     canvas.drawRect(ltrect, tpaint);
-    Rect rtrect = Rect.fromLTRB(rrect.left, rrect.bottom, rrect.right + constWidth, rrect.bottom + constWidth * 2);
+    Rect rtrect = Rect.fromLTRB(rrect.left, rrect.bottom, rrect.right + constWidth * 2, rrect.bottom + constWidth * 2);
     canvas.drawRect(rtrect, tpaint);
 
     // 地面
@@ -103,6 +103,27 @@ class _GroundPainter extends CustomPainter {
       ..lineTo(rrect.left + size.height * 4, size.height * (1.15 + 4))
       ..close();
     canvas.drawPath(rgpath, gpaint);
+
+    // 道路
+    Rect lTrackRect = Rect.fromLTRB(- constWidth * 2, size.height, - constWidth, size.height + constWidth / 2);
+    canvas.drawRect(lTrackRect, paint);
+    Rect rTrackRect = Rect.fromLTRB(size.width + constWidth, size.height, size.width + constWidth * 2, size.height + constWidth / 2);
+    canvas.drawRect(rTrackRect, paint);
+
+    Paint tTrackPaint = Paint()
+      ..color = const Color.fromARGB(255, 113, 113, 113)
+      ..style = PaintingStyle.fill;
+    Rect lTrackTRect = Rect.fromLTRB(- size.height * 4, size.height - constWidth, - constWidth / 10, size.height);
+    canvas.drawRect(lTrackTRect, tTrackPaint);
+    Rect rTrackTRect = Rect.fromLTRB(size.width + constWidth / 10, size.height - constWidth, size.width + size.height * 4, size.height);
+    canvas.drawRect(rTrackTRect, tTrackPaint);
+    Paint tTrackSPaint = Paint()
+      ..color = const Color.fromARGB(255, 130, 130, 130)
+      ..style = PaintingStyle.fill;
+    Rect lTrackTSRect = Rect.fromLTRB(- size.height * 4, size.height - constWidth * 0.47, - constWidth / 10, size.height - constWidth * 0.53);
+    canvas.drawRect(lTrackTSRect, tTrackSPaint);
+    Rect rTrackTSRect = Rect.fromLTRB(size.width + constWidth / 10, size.height - constWidth * 0.47, size.width + size.height * 4, size.height - constWidth * 0.53);
+    canvas.drawRect(rTrackTSRect, tTrackSPaint);
   }
 
   @override

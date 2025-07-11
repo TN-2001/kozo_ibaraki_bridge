@@ -103,7 +103,11 @@ class BridgegameCanvas extends StatelessWidget {
                     child: Image.asset(ImagePass.name, width: height, height: height * 0.5,),
                   ),
                   // 海
-                  Sea(),
+                  SizedBox(
+                    width: canvasWidth,
+                    height: canvasHeight,
+                    child: Sea(),
+                  ),
                   // 船
                   Transform(
                     transform: Matrix4.translationValues(-canvasWidth * 0.2, height * 0.375, 0),
@@ -115,6 +119,18 @@ class BridgegameCanvas extends StatelessWidget {
                     height: canvasHeight,
                     child: Ground(constWidth: cellSize*2, canvasWidth: canvasWidth, canvasHeight: canvasHeight,),
                   ),
+                  // トラック
+                  if (!controller.isCalculation)...{
+                    Transform(
+                      transform: Matrix4.translationValues(canvasWidth * 0.5 + height * 0.075 + canvasHeight * 0.05, canvasHeight * 0.5 - cellSize * 3, 0),
+                      child: Image.asset(ImagePass.truck, width: height * 0.15, height: height * 0.15,),
+                    ),
+                  } else ...{
+                    Transform(
+                      transform: Matrix4.translationValues(- canvasWidth * 0.5 - height * 0.075 - canvasHeight * 0.05, canvasHeight * 0.5 - cellSize * 3, 0),
+                      child: Image.asset(ImagePass.truck, width: height * 0.15, height: height * 0.15,),
+                    ),
+                  },
                   // 
                   paintCanvas(context),
                 ],

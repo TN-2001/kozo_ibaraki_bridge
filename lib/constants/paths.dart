@@ -17,4 +17,5 @@ class ImagePass {
   static String grass = "assets/images/grass.png";
   static String sea = "assets/images/sea.png";
   static String ship = "assets/images/ship.png";
+  static String truck = "assets/images/truck.png";
 }
