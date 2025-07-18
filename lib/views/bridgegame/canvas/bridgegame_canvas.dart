@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:kozo_ibaraki_bridge/constants/paths.dart';
-import 'package:kozo_ibaraki_bridge/utils/camera.dart';
-import 'package:kozo_ibaraki_bridge/utils/my_painter.dart';
-import 'package:kozo_ibaraki_bridge/views/bridgegame/canvas/ground.dart';
-import 'package:kozo_ibaraki_bridge/views/bridgegame/canvas/sea.dart';
-import 'package:kozo_ibaraki_bridge/views/bridgegame/models/bridgegame_controller.dart';
+
+import '../../../constants/paths.dart';
+import '../../../utils/camera.dart';
+import '../../../utils/my_painter.dart';
+import '../models/bridgegame_controller.dart';
+import 'ground.dart';
+import 'sea.dart';
 
 class BridgegameCanvas extends StatelessWidget {
   BridgegameCanvas({super.key, required this.controller});
@@ -63,86 +64,95 @@ class BridgegameCanvas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
 
-          double width = constraints.maxWidth;
-          double height = constraints.maxHeight;
-          if (width / height < 16 / 9) {
-            height = width / (16 / 9);
-          } else if (width / height > 16 / 9) {
-            width = height * (16 / 9);
-          }
+        double width = constraints.maxWidth;
+        double height = constraints.maxHeight;
+        if (width / height < 16 / 9) {
+          height = width / (16 / 9);
+        } else if (width / height > 16 / 9) {
+          width = height * (16 / 9);
+        }
 
-          camera.init(
-            _getCameraScale(Rect.fromLTRB((width/10), (height/4), width-(width/10), height-(height/4)), controller.nodeRect), 
-            controller.nodeRect.center, 
-            Offset(constraints.maxWidth / 2, constraints.maxHeight / 2)
-          );
-          final double canvasWidth = camera.scale * controller.nodeRect.width;
-          final double canvasHeight = camera.scale * controller.nodeRect.height;
-          final double cellSize = camera.scale;
+        camera.init(
+          _getCameraScale(Rect.fromLTRB((width/10), (height/4), width-(width/10), height-(height/4)), controller.nodeRect), 
+          controller.nodeRect.center, 
+          Offset(constraints.maxWidth / 2, constraints.maxHeight / 2)
+        );
+        final double canvasWidth = camera.scale * controller.nodeRect.width;
+        final double canvasHeight = camera.scale * controller.nodeRect.height;
+        final double cellSize = camera.scale;
 
 
-          return Center(
-            child: Container(
-              color: const Color.fromARGB(255, 255, 255, 255),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  // 雲
-                  Transform(
-                    transform: Matrix4.translationValues(0, -height * 0.125, 0),
-                    child: Image.asset(ImagePass.cloud),
+        return Center(
+          child: Container(
+            color: const Color.fromARGB(255, 255, 255, 255),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // 雲
+                OverflowBox(
+                  maxWidth: width * 1.21,
+                  maxHeight: height * 1.21,
+                  child: Transform(
+                    transform: Matrix4.translationValues(- width * 0.01, height * 0.015, 0),
+                    child: Image.asset(ImagePass.cloud, width: width * 1.21, height: height * 1.21,),
                   ),
-                  // 太陽
+                ),
+                // 太陽
+                Transform(
+                  transform: Matrix4.translationValues(- width * 0.31, - height * 0.34, 0),
+                  child: Image.asset(ImagePass.sun, width: height * 0.25, height: height * 0.25,),
+                ),
+                // 名前
+                Transform(
+                  transform: Matrix4.translationValues(width * 0.15, -height * 0.38, 0),
+                  child: Image.asset(ImagePass.name, width: height * 1.25, height: height * 1.25 / 2,),
+                ),
+                // 海
+                SizedBox(
+                  width: canvasWidth,
+                  height: canvasHeight,
+                  child: const Sea(),
+                ),
+                // 船
+                if (!controller.isCalculation)...{
                   Transform(
-                    transform: Matrix4.translationValues(-width * 0.3, -height * 0.375, 0),
-                    child: Image.asset(ImagePass.sun, width: height * 0.2, height: height * 0.2,),
-                  ),
-                  // 名前
-                  Transform(
-                    transform: Matrix4.translationValues(width * 0.2, -height * 0.375, 0),
-                    child: Image.asset(ImagePass.name, width: height, height: height * 0.5,),
-                  ),
-                  // 海
-                  SizedBox(
-                    width: canvasWidth,
-                    height: canvasHeight,
-                    child: Sea(),
-                  ),
-                  // 船
-                  Transform(
-                    transform: Matrix4.translationValues(-canvasWidth * 0.2, height * 0.375, 0),
+                    transform: Matrix4.translationValues(height * 0.25 - canvasWidth * 0.425, height * 0.375, 0),
                     child: Image.asset(ImagePass.ship, width: height * 0.5, height: height * 0.5,),
                   ),
-                  // 土台
-                  SizedBox(
-                    width: canvasWidth,
-                    height: canvasHeight,
-                    child: Ground(constWidth: cellSize*2, canvasWidth: canvasWidth, canvasHeight: canvasHeight,),
+                } else ...{
+                  Transform(
+                    transform: Matrix4.translationValues(- height * 0.25 + canvasWidth * 0.425, height * 0.375, 0),
+                    child: Image.asset(ImagePass.ship, width: height * 0.5, height: height * 0.5,),
                   ),
-                  // トラック
-                  if (!controller.isCalculation)...{
-                    Transform(
-                      transform: Matrix4.translationValues(canvasWidth * 0.5 + height * 0.075 + canvasHeight * 0.05, canvasHeight * 0.5 - cellSize * 3, 0),
-                      child: Image.asset(ImagePass.truck, width: height * 0.15, height: height * 0.15,),
-                    ),
-                  } else ...{
-                    Transform(
-                      transform: Matrix4.translationValues(- canvasWidth * 0.5 - height * 0.075 - canvasHeight * 0.05, canvasHeight * 0.5 - cellSize * 3, 0),
-                      child: Image.asset(ImagePass.truck, width: height * 0.15, height: height * 0.15,),
-                    ),
-                  },
-                  // 
-                  paintCanvas(context),
-                ],
-              ),
+                },
+                // 土台
+                SizedBox(
+                  width: canvasWidth,
+                  height: canvasHeight,
+                  child: Ground(constWidth: cellSize*2, canvasWidth: canvasWidth, canvasHeight: canvasHeight,),
+                ),
+                // トラック
+                if (!controller.isCalculation)...{
+                  Transform(
+                    transform: Matrix4.translationValues(canvasWidth * 0.5 + height * 0.075 + canvasHeight * 0.05, canvasHeight * 0.5 - cellSize * 3, 0),
+                    child: Image.asset(ImagePass.truck, width: height * 0.15, height: height * 0.15,),
+                  ),
+                } else ...{
+                  Transform(
+                    transform: Matrix4.translationValues(- canvasWidth * 0.5 - height * 0.075 - canvasHeight * 0.05, canvasHeight * 0.5 - cellSize * 3, 0),
+                    child: Image.asset(ImagePass.truck, width: height * 0.15, height: height * 0.15,),
+                  ),
+                },
+                // 
+                paintCanvas(context),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
@@ -166,24 +176,19 @@ class BridgegamePainter extends CustomPainter {
       // 中心線
       paint = Paint()
         ..color = const Color.fromARGB(255, 0, 0, 0)
-        ..style = PaintingStyle.stroke;
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2;
       canvas.drawLine(camera.worldToScreen(data.getNode(35).pos), camera.worldToScreen(data.getNode(71*25+35).pos), paint);
 
       // 矢印
       double arrowSize = 0.2;
 
       if(data.powerIndex == 0){ // 3点曲げ
-        paint.color = const Color.fromARGB(255, 0, 0, 0);
-        paint.style = PaintingStyle.fill;
-        paint.strokeWidth = 3.0;
         for(int i = 34; i <= 36; i++){
           Offset pos = data.getNode(i).pos;
           MyPainter.arrow(camera.worldToScreen(pos), camera.worldToScreen(Offset(pos.dx, pos.dy-1.5)), arrowSize*camera.scale, const Color.fromARGB(255, 0, 63, 95), canvas);
         }
       }else if(data.powerIndex == 1){ // 4点曲げ
-        paint.color = const Color.fromARGB(255, 0, 0, 0);
-        paint.style = PaintingStyle.fill;
-        paint.strokeWidth = 3.0;
         for(int i = 22; i <= 24; i++){
           Offset pos = data.getNode(i).pos;
           MyPainter.arrow(camera.worldToScreen(pos), camera.worldToScreen(Offset(pos.dx, pos.dy-1.5)), arrowSize*camera.scale, const Color.fromARGB(255, 0, 63, 95), canvas);
@@ -291,9 +296,9 @@ class BridgegamePainter extends CustomPainter {
   // 要素の辺
   void _drawElemEdge(bool isAfter, Canvas canvas){
     Paint paint = Paint()
-      ..color = const Color.fromARGB(255, 220, 220, 220)
+      ..color = const Color.fromARGB(255, 150, 150, 150)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.2;
+      ..strokeWidth = 0.5;
 
     if(data.elemListLength > 0){
       for(int i = 0; i < data.elemListLength; i++){

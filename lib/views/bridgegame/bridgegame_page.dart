@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kozo_ibaraki_bridge/components/base_divider.dart';
-import 'package:kozo_ibaraki_bridge/constants/colors.dart';
-import 'package:kozo_ibaraki_bridge/views/bridgegame/canvas/bridgegame_canvas.dart';
-import 'package:kozo_ibaraki_bridge/views/bridgegame/models/bridgegame_controller.dart';
-import 'package:kozo_ibaraki_bridge/views/bridgegame/ui/bridgegame_ui.dart';
+import '../../components/base_divider.dart';
+import '../../constants/colors.dart';
+import 'canvas/bridgegame_canvas.dart';
+import 'models/bridgegame_controller.dart';
+import 'ui/bridgegame_ui.dart';
 
 class BridgegamePage extends StatefulWidget {
   const BridgegamePage({super.key});
@@ -14,6 +14,7 @@ class BridgegamePage extends StatefulWidget {
 
 class _BridgegamePageState extends State<BridgegamePage> {
   late BridgegameController controller;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _update() => setState(() {});
 
@@ -29,13 +30,20 @@ class _BridgegamePageState extends State<BridgegamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BaseColors.baseColor,
+      key: _scaffoldKey,
       body: Column(
         children: [
-          BridgegameUI(controller: controller,),
+          BridgegameUI(controller: controller, scaffoldKey: _scaffoldKey,),
 
-          BaseDivider(),
+          const BaseDivider(),
 
-          BridgegameCanvas(controller: controller,),
+          Expanded(
+            child: Stack(
+              children: [
+                BridgegameCanvas(controller: controller,),
+              ],
+            ),
+          ),
         ],
       ),
     );

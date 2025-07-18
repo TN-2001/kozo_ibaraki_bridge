@@ -2,53 +2,29 @@ import 'package:flutter/material.dart';
 import '../../../components/tool_ui/tool_bar_divider.dart';
 import '../../../components/tool_ui/tool_dropdown_button.dart';
 import '../../../components/tool_ui/tool_icon_button.dart';
-import '../../../components/tool_ui/tool_toggle_buttons.dart';
 import '../../../constants/colors.dart';
 import '../../../constants/dimens.dart';
-import '../../../constants/paths.dart';
 import '../models/bridgegame_controller.dart';
+import 'bridgegame_tool_bar.dart';
 
 class BridgegameUI extends StatefulWidget {
-  const BridgegameUI({super.key, required this.controller});
+  const BridgegameUI({super.key, required this.controller, required this.scaffoldKey});
 
   final BridgegameController controller;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
   State<BridgegameUI> createState() => _BridgegameUIState();
 }
 
 class _BridgegameUIState extends State<BridgegameUI> {
-
+  late GlobalKey<ScaffoldState> _scaffoldKey;
   int state = 0;
-  int _toolIndex = 0;
   int _powerIndex = 0;
 
 
   void _onPressedMenuButton() {
-
-  }
-
-  void _onPressedToolToggle(int index) {
-    setState(() {
-      _toolIndex = index;
-    });
-    widget.controller.changeToolIndex(_toolIndex);
-  }
-
-  void _onPressedUndoButton() {
-    widget.controller.undo();
-  }
-
-  void _onPressedRedoButton() {
-    widget.controller.redo();
-  }
-
-  void _onPressedMirrorButton() {
-    widget.controller.symmetrical();
-  }
-
-  void _onPressedClearButton() {
-    widget.controller.clear();
+    _scaffoldKey.currentState?.openDrawer();
   }
 
   void _onPressedPowerDropdown(int indent) {
@@ -64,7 +40,7 @@ class _BridgegameUIState extends State<BridgegameUI> {
       barrierDismissible: false,
       barrierColor: Colors.black54, // 背景を暗く
       builder: (BuildContext context) {
-        return Column(
+        return const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircularProgressIndicator(
@@ -96,10 +72,10 @@ class _BridgegameUIState extends State<BridgegameUI> {
     }
 
     // 完了メッセージを表示
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('処理が完了しました')),
-    );
+    // if (!mounted) return;
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(content: Text('処理が完了しました')),
+    // );
   }
 
   void _onPressedEditButton() {
@@ -113,7 +89,7 @@ class _BridgegameUIState extends State<BridgegameUI> {
   Widget _menuButton() {
     return ToolIconButton(
       onPressed: _onPressedMenuButton, 
-      icon: Icon(Icons.menu),
+      icon: const Icon(Icons.menu),
       message: "メニュー",
     );
   }
@@ -122,7 +98,7 @@ class _BridgegameUIState extends State<BridgegameUI> {
   @override
   void initState() {
     super.initState();
-    _onPressedToolToggle(0);
+    _scaffoldKey = widget.scaffoldKey;
   }
 
   @override
@@ -139,63 +115,28 @@ class _BridgegameUIState extends State<BridgegameUI> {
             _menuButton(),
 
             SizedBox(width: ToolUIDimens.gapWidth,),
-            ToolBarDivider(isVertivcal: true,),
-            SizedBox(width: ToolUIDimens.gapWidth,),
+            const ToolBarDivider(isVertivcal: true,),
 
-            ToolToggleButtons(
-              selectedIndex: _toolIndex,
-              onPressed: _onPressedToolToggle,
-              icons: [
-                Icon(Icons.brush),
-                ImageIcon(AssetImage(ImagePass.iconEraser)),
-              ],
-              messages: ["筆", "消しゴム"],
-            ),
+            BridgegameToolBar(controller: widget.controller),
 
-            SizedBox(width: ToolUIDimens.gapWidth,),
-            ToolBarDivider(isVertivcal: true,),
-            SizedBox(width: ToolUIDimens.gapWidth,),
-
-            ToolIconButton(
-              onPressed: _onPressedUndoButton,
-              icon: Icon(Icons.undo), 
-              message: "戻る", 
-            ),
-            ToolIconButton(
-              onPressed: _onPressedRedoButton,
-              icon: Icon(Icons.redo), 
-              message: "進む", 
-            ),
-            ToolIconButton(
-              onPressed: _onPressedMirrorButton, 
-              icon: Icon(Icons.switch_right),
-              message: "対称化（左を右にコピー）",
-            ),
-            ToolIconButton(
-              onPressed: _onPressedClearButton,
-              icon: Icon(Icons.clear), 
-              message: "クリア", 
-            ),
-
-            SizedBox(width: ToolUIDimens.gapWidth,),
-            ToolBarDivider(isVertivcal: true,),
-            Expanded(child: SizedBox()),
-            ToolBarDivider(isVertivcal: true,),
+            const ToolBarDivider(isVertivcal: true,),
+            const Expanded(child: SizedBox()),
+            const ToolBarDivider(isVertivcal: true,),
             SizedBox(width: ToolUIDimens.gapWidth,),
 
             ToolDropdownButton(
               selectedIndex: _powerIndex,
               onPressed: _onPressedPowerDropdown,
-              items: ["3点曲げ", "4点曲げ", "自重"], 
+              items: const ["荷重1", "荷重2", "自重"], 
             ),
 
             SizedBox(width: ToolUIDimens.gapWidth,),
-            ToolBarDivider(isVertivcal: true,),
+            const ToolBarDivider(isVertivcal: true,),
             SizedBox(width: ToolUIDimens.gapWidth,),
 
             ToolIconButton(
               onPressed: _onPressedAnalysisButton,
-              icon: Icon(Icons.play_arrow),
+              icon: const Icon(Icons.play_arrow),
               message: "解析",
             ),
 
@@ -215,14 +156,14 @@ class _BridgegameUIState extends State<BridgegameUI> {
             _menuButton(),
 
             SizedBox(width: ToolUIDimens.gapWidth,),
-            ToolBarDivider(isVertivcal: true,),
-            Expanded(child: SizedBox()),
-            ToolBarDivider(isVertivcal: true,),
+            const ToolBarDivider(isVertivcal: true,),
+            const Expanded(child: SizedBox()),
+            const ToolBarDivider(isVertivcal: true,),
             SizedBox(width: ToolUIDimens.gapWidth,),
 
             ToolIconButton(
               onPressed: _onPressedEditButton,
-              icon: Icon(Icons.restart_alt),
+              icon: const Icon(Icons.restart_alt),
               message: "再編集",
             ),
 

@@ -37,10 +37,16 @@ class Ground extends StatelessWidget {
         grass(constWidth - canvasWidth * 0.5 - canvasHeight * (0.2 + 0.4 * 1)),
         grass(constWidth - canvasWidth * 0.5 - canvasHeight * (0.2 + 0.4 * 2)),
         grass(constWidth - canvasWidth * 0.5 - canvasHeight * (0.2 + 0.4 * 3)),
+        grass(constWidth - canvasWidth * 0.5 - canvasHeight * (0.2 + 0.4 * 4)),
+        grass(constWidth - canvasWidth * 0.5 - canvasHeight * (0.2 + 0.4 * 5)),
+        grass(constWidth - canvasWidth * 0.5 - canvasHeight * (0.2 + 0.4 * 6)),
         grass(- constWidth + canvasWidth * 0.5 + canvasHeight * (0.2 + 0.4 * 0)),
         grass(- constWidth + canvasWidth * 0.5 + canvasHeight * (0.2 + 0.4 * 1)),
         grass(- constWidth + canvasWidth * 0.5 + canvasHeight * (0.2 + 0.4 * 2)),
         grass(- constWidth + canvasWidth * 0.5 + canvasHeight * (0.2 + 0.4 * 3)),
+        grass(- constWidth + canvasWidth * 0.5 + canvasHeight * (0.2 + 0.4 * 4)),
+        grass(- constWidth + canvasWidth * 0.5 + canvasHeight * (0.2 + 0.4 * 5)),
+        grass(- constWidth + canvasWidth * 0.5 + canvasHeight * (0.2 + 0.4 * 6)),
       ],
     );
   }

@@ -1,8 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kozo_ibaraki_bridge/views/bridgegame/bridgegame_page.dart';
 
+import 'configs/configure_nonweb.dart' if (dart.library.html) 'configs/configure_web.dart';
+
 
 void main() {
+  if (kIsWeb) {
+    configureApp();
+  }
+
   runApp(const App());
 }
 
