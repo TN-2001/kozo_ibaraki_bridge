@@ -16,8 +16,8 @@ class BaseDivider extends StatelessWidget {
       return SizedBox(
         height: double.infinity,
         child: VerticalDivider(
-          width: BaseDimens.dividerWidth,
-          thickness: BaseDimens.dividerWidth,
+          width: Dimens.dividerWidth,
+          thickness: Dimens.dividerWidth,
           indent: 0.0,
           endIndent: 0.0,
           color: ToolBarColors.dividerClor,
@@ -28,8 +28,8 @@ class BaseDivider extends StatelessWidget {
       return SizedBox(
         width: double.infinity,
         child: Divider(
-          height: BaseDimens.dividerWidth,
-          thickness: BaseDimens.dividerWidth,
+          height: Dimens.dividerWidth,
+          thickness: Dimens.dividerWidth,
           indent: 0.0,
           endIndent: 0.0,
           color: ToolBarColors.dividerClor,

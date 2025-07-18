@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_popup_menu_button.dart';
 import '../../../components/tool_ui/tool_bar_divider.dart';
 import '../../../components/tool_ui/tool_dropdown_button.dart';
 import '../../../components/tool_ui/tool_icon_button.dart';
@@ -24,7 +25,7 @@ class _BridgegameUIState extends State<BridgegameUI> {
 
 
   void _onPressedMenuButton() {
-    _scaffoldKey.currentState?.openDrawer();
+    // _scaffoldKey.currentState?.openDrawer();
   }
 
   void _onPressedPowerDropdown(int indent) {
@@ -87,10 +88,39 @@ class _BridgegameUIState extends State<BridgegameUI> {
 
 
   Widget _menuButton() {
-    return ToolIconButton(
-      onPressed: _onPressedMenuButton, 
-      icon: const Icon(Icons.menu),
-      message: "メニュー",
+    // return ToolIconButton(
+    //   onPressed: _onPressedMenuButton, 
+    //   icon: const Icon(Icons.menu),
+    //   message: "メニュー",
+    // );
+    return ToolPopupMenuButton(
+      onSelected: (index) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("タイトル"),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Column(
+                      children: [
+                        Image.asset("assets/images/help/help_01.png"),
+                        SizedBox(height: 10,),
+                        Image.asset("assets/images/help/help_02.png"),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                // ボタン
+              ],
+            );
+          }
+        );
+      },
+      texts: ["ヘルプ","他アプリ"]
     );
   }
 

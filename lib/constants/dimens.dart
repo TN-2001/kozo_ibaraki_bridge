@@ -7,8 +7,17 @@
   ベースの寸法
   Base dimensions
 */
-class BaseDimens {
-  static double dividerWidth = 1.0;
+class Dimens {
+  static const double textButtonHeight = 40.0; // テキストボタンの高さ
+
+  static const double dividerWidth = 1.0; // 線の幅
+
+  static const double elevation = 5.0; // 影の大きさ
+
+  static const double fontSize = 14.0; // 文字の大きさ
+
+  static const double windowBorderRadius = 0.0; // ウィンドウの角の丸み
+  static const double buttonBorderRadius = 0.0; // ボタンの角の丸み
 }
 
 /*
