@@ -13,9 +13,9 @@ class ToolPopupMenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // デザイン
-      width: ToolUIDimens.width,
-      height: ToolUIDimens.height,
-      color: ToolUIColors.baseColor,
+      width: MyDimens.toolButtonWidth,
+      height: MyDimens.toolButtonHeight,
+      color: MyColors.toolButtonBackground,
 
       child: PopupMenuButton<String>(
         // ボタンのデザイン
@@ -24,22 +24,22 @@ class ToolPopupMenuButton extends StatelessWidget {
         style: ButtonStyle(
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Dimens.buttonBorderRadius),
+              borderRadius: BorderRadius.circular(MyDimens.toolButtonBorderRadius),
               side: BorderSide(
-                color: ToolUIColors.borderColor, // ここで色を指定
-                width: ToolUIDimens.borderWidth, // 線の太さも指定可能
+                color: MyColors.toolButtonBorder, // ここで色を指定
+                width: MyDimens.toolButtonBorderWidth, // 線の太さも指定可能
               ),
             ),
           ),
         ),
-        // メニューのデザイン
-        color: ToolUIColors.baseColor,
-        elevation: Dimens.elevation,
+        // ドロップダウンのデザイン
+        color: MyColors.toolDropdownBackground,
+        elevation: MyDimens.toolDropdownElevation,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(Dimens.windowBorderRadius),
+          borderRadius: BorderRadius.circular(MyDimens.toolDropdownBorderRadius),
           side: BorderSide(
-            color: ToolUIColors.borderColor, // ここで色を指定
-            width: ToolUIDimens.borderWidth, // 線の太さも指定可能
+            color: MyColors.toolDropdownBackground, // ここで色を指定
+            width: MyDimens.toolDropdownBorderWidth, // 線の太さも指定可能
           ),
         ),
         menuPadding: EdgeInsets.zero,
@@ -50,11 +50,11 @@ class ToolPopupMenuButton extends StatelessWidget {
           return [
             for (int i = 0; i < texts.length; i++)...{
               PopupMenuItem(
-                height: Dimens.textButtonHeight,
+                height: MyDimens.toolDropdownItemHeight,
                 value: texts[i],
                 child: Text(
                   texts[i],
-                  style: TextStyle(fontSize: Dimens.fontSize),
+                  style: TextStyle(fontSize: MyDimens.toolDropdownItemFontSize),
                 ),
               ),
             },

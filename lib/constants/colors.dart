@@ -4,37 +4,16 @@ import 'package:flutter/widgets.dart';
   Define colors here.
 */
 
-/*
-  ベースカラー
-  Base colors
-*/
-class BaseColors {
-  static Color baseColor = const Color.fromARGB(255, 255, 255, 255);
-  static Color dividerClor = const Color.fromARGB(255, 235, 235, 235);
-  static Color borderColor = const Color.fromARGB(255, 235, 235, 235);
-}
+class MyColors {
+  static const Color baseBackground = Color.fromARGB(255, 255, 255, 255);
+  static const Color baseDivider = Color.fromARGB(255, 235, 235, 235);
+  static const Color baseBorder = Color.fromARGB(255, 235, 235, 235);
 
-/*
-  ツールバーの色
-  Tool bar colors
-*/
-class ToolBarColors {
-  static Color baseColor = const Color.fromARGB(255, 255, 255, 255);
-  static Color dividerClor = const Color.fromARGB(255, 235, 235, 235);
-}
-/*
-  ツールUIの色
-  Tool UI colors
-*/
-class ToolUIColors {
-  static Color baseColor = const Color.fromARGB(255, 255, 255, 255);
-  static Color borderColor = const Color.fromARGB(0, 245, 245, 245);
-}
+  static const Color toolBarBackground = Color.fromARGB(255, 255, 255, 255);
+  static const Color toolBarDivider = Color.fromARGB(255, 235, 235, 235);
 
-/*
-  キャンバスの色
-  Canvas colors
-*/
-class CanvasColors {
-  static Color baseColor = const Color.fromARGB(255, 235, 235, 235);
+  static const Color toolButtonBackground = toolBarBackground;
+  static const Color toolButtonBorder = Color.fromARGB(0, 245, 245, 245);
+
+  static const Color toolDropdownBackground = toolBarBackground;
 }

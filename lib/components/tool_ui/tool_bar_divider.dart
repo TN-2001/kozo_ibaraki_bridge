@@ -14,25 +14,25 @@ class ToolBarDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isVertivcal) {
       return SizedBox(
-        height: ToolBarDimens.height,
+        height: MyDimens.toolBarHeight,
         child: VerticalDivider(
-          width: ToolBarDimens.dividerWidth,
-          thickness: ToolBarDimens.dividerWidth,
-          indent: ToolBarDimens.dividerIndent,
-          endIndent: ToolBarDimens.dividerIndent,
-          color: ToolBarColors.dividerClor,
+          width: MyDimens.toolBarDividerWidth,
+          thickness: MyDimens.toolBarDividerWidth,
+          indent: MyDimens.toolBarDividerIndent,
+          endIndent: MyDimens.toolBarDividerIndent,
+          color: MyColors.toolBarDivider,
         ),
       );
     }
     else {
       return SizedBox(
-        width: ToolUIDimens.width,
+        width: MyDimens.toolBarWidth,
         child: Divider(
-          height: ToolBarDimens.dividerWidth,
-          thickness: ToolBarDimens.dividerWidth,
-          indent: ToolBarDimens.dividerIndent,
-          endIndent: ToolBarDimens.dividerIndent,
-          color: ToolBarColors.dividerClor,
+          height: MyDimens.toolBarDividerWidth,
+          thickness: MyDimens.toolBarDividerWidth,
+          indent: MyDimens.toolBarDividerIndent,
+          endIndent: MyDimens.toolBarDividerIndent,
+          color: MyColors.toolBarDivider,
         ),
       );
     }

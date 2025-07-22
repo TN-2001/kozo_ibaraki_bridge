@@ -99,7 +99,7 @@ class _BridgegameUIState extends State<BridgegameUI> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text("タイトル"),
+              title: Text("ヘルプ"),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
@@ -114,7 +114,12 @@ class _BridgegameUIState extends State<BridgegameUI> {
                 ),
               ),
               actions: <Widget>[
-                // ボタン
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }, 
+                  child: const Text("閉じる"),
+                ),
               ],
             );
           }
@@ -136,15 +141,15 @@ class _BridgegameUIState extends State<BridgegameUI> {
     if (state == 0) {
       return Container(
         width: double.infinity,
-        height: ToolBarDimens.height,
-        color: BaseColors.baseColor,
+        height: MyDimens.toolBarHeight,
+        color: MyColors.toolBarBackground,
         child: Row(
           children: [
-            SizedBox(width: ToolUIDimens.gapWidth,),
+            SizedBox(width: MyDimens.toolBarGapWidth,),
 
             _menuButton(),
 
-            SizedBox(width: ToolUIDimens.gapWidth,),
+            SizedBox(width: MyDimens.toolBarGapWidth,),
             const ToolBarDivider(isVertivcal: true,),
 
             BridgegameToolBar(controller: widget.controller),
@@ -152,7 +157,7 @@ class _BridgegameUIState extends State<BridgegameUI> {
             const ToolBarDivider(isVertivcal: true,),
             const Expanded(child: SizedBox()),
             const ToolBarDivider(isVertivcal: true,),
-            SizedBox(width: ToolUIDimens.gapWidth,),
+            SizedBox(width: MyDimens.toolBarGapWidth,),
 
             ToolDropdownButton(
               selectedIndex: _powerIndex,
@@ -160,9 +165,9 @@ class _BridgegameUIState extends State<BridgegameUI> {
               items: const ["荷重1", "荷重2", "自重"], 
             ),
 
-            SizedBox(width: ToolUIDimens.gapWidth,),
+            SizedBox(width: MyDimens.toolBarGapWidth,),
             const ToolBarDivider(isVertivcal: true,),
-            SizedBox(width: ToolUIDimens.gapWidth,),
+            SizedBox(width: MyDimens.toolBarGapWidth,),
 
             ToolIconButton(
               onPressed: _onPressedAnalysisButton,
@@ -170,7 +175,7 @@ class _BridgegameUIState extends State<BridgegameUI> {
               message: "解析",
             ),
 
-            SizedBox(width: ToolUIDimens.gapWidth,),
+            SizedBox(width: MyDimens.toolBarGapWidth,),
           ],
         ),
       );
@@ -178,18 +183,18 @@ class _BridgegameUIState extends State<BridgegameUI> {
     else {
       return Container(
         width: double.infinity,
-        color: BaseColors.baseColor,
+        color: MyColors.toolBarBackground,
         child: Row(
           children: [
-            SizedBox(width: ToolUIDimens.gapWidth,),
+            SizedBox(width: MyDimens.toolBarGapWidth,),
 
             _menuButton(),
 
-            SizedBox(width: ToolUIDimens.gapWidth,),
+            SizedBox(width: MyDimens.toolBarGapWidth,),
             const ToolBarDivider(isVertivcal: true,),
             const Expanded(child: SizedBox()),
             const ToolBarDivider(isVertivcal: true,),
-            SizedBox(width: ToolUIDimens.gapWidth,),
+            SizedBox(width: MyDimens.toolBarGapWidth,),
 
             ToolIconButton(
               onPressed: _onPressedEditButton,
@@ -197,7 +202,7 @@ class _BridgegameUIState extends State<BridgegameUI> {
               message: "再編集",
             ),
 
-            SizedBox(width: ToolUIDimens.gapWidth,),
+            SizedBox(width: MyDimens.toolBarGapWidth,),
           ],
         ),
       );

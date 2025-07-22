@@ -19,20 +19,25 @@ class ToolDropdownButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // デザイン
-      height: ToolUIDimens.height,
+      height: MyDimens.toolButtonHeight,
       decoration: BoxDecoration(
-        color: ToolUIColors.baseColor,
+        color: MyColors.toolBarBackground,
         border: Border.all(
-          color: ToolUIColors.borderColor,
-          width: ToolUIDimens.borderWidth,
+          color: MyColors.toolButtonBorder,
+          width: MyDimens.toolButtonBorderWidth,
         ),
       ),
 
       child: DropdownButton(
-        // デザイン
+        // ボタンのデザイン
         underline: SizedBox(),
-        // 表示
-        value: items[selectedIndex],
+        // ドロップダウンのデザイン
+        dropdownColor: MyColors.toolDropdownBackground,
+        borderRadius: BorderRadius.circular(MyDimens.toolDropdownBorderRadius),
+        elevation: MyDimens.toolDropdownElevation.toInt(),
+        
+        // アイテムのデザイン
+        itemHeight: MyDimens.toolDropdownItemHeight,
         items: items.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
@@ -40,6 +45,7 @@ class ToolDropdownButton extends StatelessWidget {
           );
         }).toList(),
         // イベント
+        value: items[selectedIndex],
         onChanged: (value) {
           for (int i = 0; i < items.length; i++) {
             if (value == items[i]) {

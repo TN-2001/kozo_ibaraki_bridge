@@ -29,7 +29,7 @@ class _BridgegamePageState extends State<BridgegamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BaseColors.baseColor,
+      backgroundColor: MyColors.baseBackground,
       key: _scaffoldKey,
       body: Column(
         children: [

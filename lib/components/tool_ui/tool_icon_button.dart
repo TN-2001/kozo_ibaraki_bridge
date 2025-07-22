@@ -18,9 +18,9 @@ class ToolIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // デザイン
-      width: ToolUIDimens.width,
-      height: ToolUIDimens.height,
-      color: ToolUIColors.baseColor,
+      width: MyDimens.toolButtonWidth,
+      height: MyDimens.toolButtonHeight,
+      color: MyColors.toolButtonBackground,
 
       child: Tooltip(
         message: message,
@@ -28,10 +28,10 @@ class ToolIconButton extends StatelessWidget {
           // デザイン
           style: IconButton.styleFrom(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(0),
+              borderRadius: BorderRadius.circular(MyDimens.toolButtonBorderRadius),
               side: BorderSide(
-                color: ToolUIColors.borderColor, // ここで色を指定
-                width: ToolUIDimens.borderWidth, // 線の太さも指定可能
+                color: MyColors.toolButtonBorder, // ここで色を指定
+                width: MyDimens.toolButtonBorderWidth // 線の太さも指定可能
               ),
             ),
           ),

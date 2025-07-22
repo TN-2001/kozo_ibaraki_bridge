@@ -25,17 +25,17 @@ class ToolToggleButtons extends StatelessWidget {
 
     return Container(
       // デザイン
-      color: ToolUIColors.baseColor,
+      color: MyColors.toolButtonBackground,
 
       child: ToggleButtons(
         // デザイン
-        borderWidth: ToolUIDimens.borderWidth,
-        borderColor: ToolUIColors.borderColor,
-        selectedBorderColor: ToolUIColors.borderColor,
-        borderRadius: BorderRadius.zero,
+        borderWidth: MyDimens.toolButtonBorderWidth,
+        borderColor: MyColors.toolButtonBorder,
+        selectedBorderColor: MyColors.toolButtonBorder,
+        borderRadius: BorderRadius.circular(MyDimens.toolButtonBorderRadius),
         constraints: BoxConstraints(
-          minWidth: ToolUIDimens.width - ToolUIDimens.borderWidth*2,
-          minHeight: ToolUIDimens.height - ToolUIDimens.borderWidth*2,
+          minWidth: MyDimens.toolButtonWidth - MyDimens.toolButtonBorderWidth * 2,
+          minHeight: MyDimens.toolButtonHeight - MyDimens.toolButtonBorderWidth * 2,
         ),
         // イベント
         onPressed: onPressed,
@@ -46,8 +46,8 @@ class ToolToggleButtons extends StatelessWidget {
             Tooltip(
               message: messages.length > i ? messages[i] : "",
               child: SizedBox(
-                width: ToolUIDimens.width - ToolUIDimens.borderWidth*2,
-                height: ToolUIDimens.height - ToolUIDimens.borderWidth*2,
+                width: MyDimens.toolButtonWidth - MyDimens.toolButtonBorderWidth * 2,
+                height: MyDimens.toolButtonHeight - MyDimens.toolButtonBorderWidth * 2,
                 child: icons[i],
               ),
             ),

@@ -57,7 +57,7 @@ class _BridgegameToolBarState extends State<BridgegameToolBar> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(width: ToolUIDimens.gapWidth,),
+        SizedBox(width: MyDimens.toolBarGapWidth,),
 
         ToolToggleButtons(
           selectedIndex: _toolIndex,
@@ -69,9 +69,9 @@ class _BridgegameToolBarState extends State<BridgegameToolBar> {
           messages: const ["ペン", "消しゴム"],
         ),
 
-        SizedBox(width: ToolUIDimens.gapWidth,),
+        SizedBox(width: MyDimens.toolBarGapWidth,),
         const ToolBarDivider(isVertivcal: true,),
-        SizedBox(width: ToolUIDimens.gapWidth,),
+        SizedBox(width: MyDimens.toolBarGapWidth,),
 
         // ToolIconButton(
         //   onPressed: _onPressedUndoButton,
@@ -94,7 +94,7 @@ class _BridgegameToolBarState extends State<BridgegameToolBar> {
           message: "クリア", 
         ),
 
-        SizedBox(width: ToolUIDimens.gapWidth,),
+        SizedBox(width: MyDimens.toolBarGapWidth,),
       ]
     );
   }

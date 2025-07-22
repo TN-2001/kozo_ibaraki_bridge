@@ -3,50 +3,24 @@
   Define dimensions here.
 */
 
-/*
-  ベースの寸法
-  Base dimensions
-*/
-class Dimens {
-  static const double textButtonHeight = 40.0; // テキストボタンの高さ
+class MyDimens {
+  static const double baseDividerWidth = 1.0; // 線の幅
+  static const double baseFontSize = 14.0; // 文字の大きさ
 
-  static const double dividerWidth = 1.0; // 線の幅
+  static const double toolBarWidth = 52.0;
+  static const double toolBarHeight = 52.0;
+  static const double toolBarGapWidth = 4.0;
+  static const double toolBarDividerWidth = 1.0;
+  static const double toolBarDividerIndent = 1.0;
 
-  static const double elevation = 5.0; // 影の大きさ
+  static const double toolButtonWidth = toolBarWidth - toolBarGapWidth * 2;
+  static const double toolButtonHeight = toolBarHeight - toolBarGapWidth * 2;
+  static const double toolButtonBorderWidth = 0.0;
+  static const double toolButtonBorderRadius = 0.0; // ボタンの角の丸み
 
-  static const double fontSize = 14.0; // 文字の大きさ
-
-  static const double windowBorderRadius = 0.0; // ウィンドウの角の丸み
-  static const double buttonBorderRadius = 0.0; // ボタンの角の丸み
-}
-
-/*
-  UIの寸法
-  UI dimensions
-*/
-class UIDimens {
-  static double padding = 10.0;
-}
-
-/*
-  ツールバーの寸法
-  Tool bar dimensions
-*/
-class ToolBarDimens {
-  static double width = ToolUIDimens.width + ToolUIDimens.gapWidth * 2;
-  static double height = ToolUIDimens.height + ToolUIDimens.gapWidth * 2;
-  static double dividerWidth = 1.0;
-  static double dividerIndent = 1.0;
-}
-
-/*
-  ツールUIの寸法
-  Tool UI dimensions
-*/
-class ToolUIDimens {
-  static double width = 40.0;
-  static double height = 40.0;
-  static double borderWidth = 0.0;
-
-  static double gapWidth = 5.0;
+  static const double toolDropdownElevation = 8.0; // 影の大きさ
+  static const double toolDropdownBorderWidth = 0.0;
+  static const double toolDropdownBorderRadius = 8.0; // ウィンドウの角の丸み
+  static const double toolDropdownItemHeight = 48.0; // テキストボタンの高さ
+  static const double toolDropdownItemFontSize = 14.0;
 }
