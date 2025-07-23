@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kozo_ibaraki_bridge/components/tool_ui/tool_popup_menu_button.dart';
 import '../../../components/tool_ui/tool_bar_divider.dart';
 import '../../../components/tool_ui/tool_dropdown_button.dart';
 import '../../../components/tool_ui/tool_icon_button.dart';
@@ -19,13 +18,42 @@ class BridgegameUI extends StatefulWidget {
 }
 
 class _BridgegameUIState extends State<BridgegameUI> {
-  late GlobalKey<ScaffoldState> _scaffoldKey;
+  // late GlobalKey<ScaffoldState> _scaffoldKey;
   int state = 0;
   int _powerIndex = 0;
 
 
   void _onPressedMenuButton() {
     // _scaffoldKey.currentState?.openDrawer();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("ヘルプ"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Column(
+                  children: [
+                    Image.asset("assets/images/help/help_01.png"),
+                    SizedBox(height: 10,),
+                    Image.asset("assets/images/help/help_02.png"),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              }, 
+              child: const Text("閉じる"),
+            ),
+          ],
+        );
+      }
+    );
   }
 
   void _onPressedPowerDropdown(int indent) {
@@ -88,52 +116,52 @@ class _BridgegameUIState extends State<BridgegameUI> {
 
 
   Widget _menuButton() {
-    // return ToolIconButton(
-    //   onPressed: _onPressedMenuButton, 
-    //   icon: const Icon(Icons.menu),
-    //   message: "メニュー",
-    // );
-    return ToolPopupMenuButton(
-      onSelected: (index) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text("ヘルプ"),
-              content: SingleChildScrollView(
-                child: ListBody(
-                  children: <Widget>[
-                    Column(
-                      children: [
-                        Image.asset("assets/images/help/help_01.png"),
-                        SizedBox(height: 10,),
-                        Image.asset("assets/images/help/help_02.png"),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }, 
-                  child: const Text("閉じる"),
-                ),
-              ],
-            );
-          }
-        );
-      },
-      texts: ["ヘルプ","他アプリ"]
+    return ToolIconButton(
+      onPressed: _onPressedMenuButton, 
+      icon: const Icon(Icons.menu),
+      message: "メニュー",
     );
+    // return ToolPopupMenuButton(
+    //   onSelected: (index) {
+    //     showDialog(
+    //       context: context,
+    //       builder: (context) {
+    //         return AlertDialog(
+    //           title: Text("ヘルプ"),
+    //           content: SingleChildScrollView(
+    //             child: ListBody(
+    //               children: <Widget>[
+    //                 Column(
+    //                   children: [
+    //                     Image.asset("assets/images/help/help_01.png"),
+    //                     SizedBox(height: 10,),
+    //                     Image.asset("assets/images/help/help_02.png"),
+    //                   ],
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //           actions: <Widget>[
+    //             TextButton(
+    //               onPressed: () {
+    //                 Navigator.of(context).pop();
+    //               }, 
+    //               child: const Text("閉じる"),
+    //             ),
+    //           ],
+    //         );
+    //       }
+    //     );
+    //   },
+    //   texts: ["ヘルプ","他アプリ"]
+    // );
   }
 
 
   @override
   void initState() {
     super.initState();
-    _scaffoldKey = widget.scaffoldKey;
+    // _scaffoldKey = widget.scaffoldKey;
   }
 
   @override
