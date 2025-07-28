@@ -32,7 +32,7 @@ class _SeaPainter extends CustomPainter {
     rect = Rect.fromLTRB(0, size.height * (1.25 + 0.06 * 2), size.width, size.height * 4);
     canvas.drawRect(rect, paint);
     paint.color = const Color.fromARGB(255, 96, 178, 228);
-    rect = Rect.fromLTRB(0, size.height * (1.25 + 0.06 * 3), size.width, size.height * 4);
+    rect = Rect.fromLTRB(0, size.height * (1.25 + 0.06 * 3), size.width, size.height * 10);
     canvas.drawRect(rect, paint);
   }
 

@@ -1,13 +1,20 @@
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kozo_ibaraki_bridge/views/bridgegame/bridgegame_page.dart';
-
+import 'configs/configure_android.dart';
 import 'configs/configure_nonweb.dart' if (dart.library.html) 'configs/configure_web.dart';
 
 
 void main() {
+  // FlutterフレームワークとFlutterエンジンを結びつける
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // 各プラットフォームでの設定
   if (kIsWeb) {
-    configureApp();
+    configureWeb();
+  } else if (Platform.isAndroid) {
+    configureAndroid();
   }
 
   runApp(const App());
@@ -19,7 +26,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'kozo bridge | 茨城大学 構造・地震工学研究室',
+      title: 'Kozo App: 橋づくりゲーム',
       debugShowCheckedModeBanner: false, // デバッグ用の確認をOFF
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
