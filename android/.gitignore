@@ -9,6 +9,8 @@ GeneratedPluginRegistrant.java
 
 # Remember to never publicly share your keystore.
 # See https://flutter.dev/to/reference-keystore
+# .jksの情報を記載するファイル
 key.properties
 **/*.keystore
+# keystoreファイル（証明書）
 **/*.jks
