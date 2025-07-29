@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.takahironakayama.kozo_ibaraki_bridge">
     <application
-        android:label="Kozo App：橋づくりゲーム"
+        android:label="Kozo 橋"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

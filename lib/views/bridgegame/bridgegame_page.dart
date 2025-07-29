@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../components/base_divider.dart';
-import '../../constants/colors.dart';
+import '../../components/component.dart';
 import 'canvas/bridgegame_canvas.dart';
 import 'models/bridgegame_controller.dart';
 import 'ui/bridgegame_ui.dart';
@@ -46,7 +45,7 @@ class _BridgegamePageState extends State<BridgegamePage> {
     }
 
     return Scaffold(
-      // backgroundColor: MyColors.baseBackground,
+      backgroundColor: Colors.black,
       key: _scaffoldKey,
       body: SafeArea(
         child: ClipRect(

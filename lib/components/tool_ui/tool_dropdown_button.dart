@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '/constants/colors.dart';
-import '/constants/dimens.dart';
+import '../../constants/constant.dart';
 
 class ToolDropdownButton extends StatelessWidget {
   const ToolDropdownButton({
@@ -30,7 +29,7 @@ class ToolDropdownButton extends StatelessWidget {
 
       child: DropdownButton(
         // ボタンのデザイン
-        underline: SizedBox(),
+        underline: const SizedBox(),
         // ドロップダウンのデザイン
         dropdownColor: MyColors.toolDropdownBackground,
         borderRadius: BorderRadius.circular(MyDimens.toolDropdownBorderRadius),

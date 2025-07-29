@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '/constants/colors.dart';
-import '/constants/dimens.dart';
+import '../../constants/constant.dart';
 
 class ToolBarDivider extends StatelessWidget {
   const ToolBarDivider({
@@ -13,8 +12,9 @@ class ToolBarDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isVertivcal) {
-      return SizedBox(
+      return const SizedBox(
         height: MyDimens.toolBarHeight,
+        width: MyDimens.toolBarGapWidth * 2,
         child: VerticalDivider(
           width: MyDimens.toolBarDividerWidth,
           thickness: MyDimens.toolBarDividerWidth,
@@ -25,7 +25,7 @@ class ToolBarDivider extends StatelessWidget {
       );
     }
     else {
-      return SizedBox(
+      return const SizedBox(
         width: MyDimens.toolBarWidth,
         child: Divider(
           height: MyDimens.toolBarDividerWidth,

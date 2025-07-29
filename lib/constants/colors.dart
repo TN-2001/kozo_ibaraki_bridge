@@ -16,4 +16,7 @@ class MyColors {
   static const Color toolButtonBorder = Color.fromARGB(0, 245, 245, 245);
 
   static const Color toolDropdownBackground = toolBarBackground;
+
+
+  static const Color canvasBackground = Color.fromARGB(255, 235, 235, 235);
 }

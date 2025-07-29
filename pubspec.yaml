@@ -1,7 +1,7 @@
 name: kozo_ibaraki_bridge
 description: "A new Flutter project."
 publish_to: 'none'
-version: 1.0.0+2
+version: 1.0.0+3
 
 environment:
   sdk: ^3.8.1
@@ -25,8 +25,9 @@ flutter:
   assets:
     - assets/images/
     - assets/images/app_icons/
-    - assets/images/icons/
+    - assets/images/background/
     - assets/images/help/
+    - assets/images/icons/
 
 flutter_icons:       
   android: true

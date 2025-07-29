@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '/constants/colors.dart';
-import '/constants/dimens.dart';
+import '../../constants/constant.dart';
 
 class ToolIconButton extends StatelessWidget {
   const ToolIconButton({
@@ -29,7 +28,7 @@ class ToolIconButton extends StatelessWidget {
           style: IconButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(MyDimens.toolButtonBorderRadius),
-              side: BorderSide(
+              side: const BorderSide(
                 color: MyColors.toolButtonBorder, // ここで色を指定
                 width: MyDimens.toolButtonBorderWidth // 線の太さも指定可能
               ),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import '/constants/colors.dart';
-import '/constants/dimens.dart';
-
+import '../../constants/constant.dart';
 
 class ToolToggleButtons extends StatelessWidget {
   const ToolToggleButtons({
@@ -33,7 +31,7 @@ class ToolToggleButtons extends StatelessWidget {
         borderColor: MyColors.toolButtonBorder,
         selectedBorderColor: MyColors.toolButtonBorder,
         borderRadius: BorderRadius.circular(MyDimens.toolButtonBorderRadius),
-        constraints: BoxConstraints(
+        constraints: const BoxConstraints(
           minWidth: MyDimens.toolButtonWidth - MyDimens.toolButtonBorderWidth * 2,
           minHeight: MyDimens.toolButtonHeight - MyDimens.toolButtonBorderWidth * 2,
         ),

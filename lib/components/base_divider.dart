@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '/constants/colors.dart';
-import '/constants/dimens.dart';
+import '/constants/constant.dart';
 
 class BaseDivider extends StatelessWidget {
   const BaseDivider({
@@ -13,7 +12,7 @@ class BaseDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isVertivcal) {
-      return SizedBox(
+      return const SizedBox(
         height: double.infinity,
         child: VerticalDivider(
           width: MyDimens.baseDividerWidth,
@@ -25,7 +24,7 @@ class BaseDivider extends StatelessWidget {
       );
     }
     else {
-      return SizedBox(
+      return const SizedBox(
         width: double.infinity,
         child: Divider(
           height: MyDimens.baseDividerWidth,
