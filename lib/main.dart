@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kozo_ibaraki_bridge/views/bridgegame/bridgegame_page.dart';
-import 'configs/configure_android.dart';
 import 'configs/configure_nonweb.dart' if (dart.library.html) 'configs/configure_web.dart';
 
 
@@ -13,8 +11,6 @@ void main() {
   // 各プラットフォームでの設定
   if (kIsWeb) {
     configureWeb();
-  } else if (Platform.isAndroid) {
-    configureAndroid();
   }
 
   runApp(const App());
